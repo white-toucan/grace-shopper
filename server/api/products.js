@@ -35,7 +35,7 @@ router.post('/', async (req, res, next) => {
 });
 
 router.put('/:id', async (req, res, next) => {
-	const id = req.params.id;
+	const id = parseInt(req.params.id,10)
 	try {
 		const product = await Product.findByPk(id);
 		if (!product) return res.sendStatus(404);
