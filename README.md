@@ -1,7 +1,7 @@
-#Members
-Anna Mai
-Reginald Beauvais
-Roberto
-Danny Marquez aka DropTheLogic aka Toucan Dan
+# Members
+- Anna Mai
+- Reginald Beauvais
+- Roberto
+- Danny Marquez aka DropTheLogic aka Toucan Dan
 
-#<Grace Shopper Project Name Here>
+# <Grace Shopper Project Name Here>
