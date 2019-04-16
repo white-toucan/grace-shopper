@@ -48,7 +48,8 @@ router.put('/:id', async (req, res, next) => {
 
 router.delete('/:id', async (req, res, next) => {
 	try {
-		const id = req.params.id;
+		const id = parseInt(req.params.id,10)
+    
 		await Product.destroy({
 			where: {
 				id: id
