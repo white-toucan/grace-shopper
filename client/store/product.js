@@ -30,9 +30,8 @@ const setAllProducts = data => ({
 /**
  * THUNK CREATORS
  */
-export const getAllProducts = () => {
+export const getAllProductsThunk = () => {
   return async dispatch => {
-    // todo: input the right backend route
     const {data} = await axios.get('/products')
     dispatch(setAllProducts(data))
     //could consider filtering product object and only using properties needed for allProducts page
@@ -46,7 +45,7 @@ export default function(state = initialState, action) {
   let stateCopy = {...state}
   switch (action.type) {
     case SET_SELECTED_PRODUCT:
-      //note we chose to store the full product vs just the id, not sure if this is right?
+      //note we chose to store the full product vs just the id, when to we want to wait?
       stateCopy.selectedProduct = action.product
       return stateCopy
     case SET_ALL_PRODUCTS:
