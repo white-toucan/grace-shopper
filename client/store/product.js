@@ -32,7 +32,7 @@ const setAllProducts = data => ({
  */
 export const getAllProductsThunk = () => {
 	return async dispatch => {
-		const {data} = await axios.get('/products');
+		const {data} = await axios.get('/api/products');
 		dispatch(setAllProducts(data));
 		//could consider filtering product object and only using properties needed for allProducts page
 	};
