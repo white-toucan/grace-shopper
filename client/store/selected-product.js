@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from 'axios';
 
 /**
  * ACTION TYPES
@@ -19,19 +19,19 @@ const setProduct = product => ({type: SET_PRODUCT, product});
  * THUNK CREATORS
  */
 export const getProduct = id => async dispatch => {
-  try {
-    const product = await axios.get(`/api/product/${id}`);
-    return dispatch(setProduct(product));
-  } catch (error) {
-    console.error(`Error fetching product ${id}: ${error}`);
-  }
-}
+	try {
+		const product = await axios.get(`/api/product/${id}`);
+		return dispatch(setProduct(product));
+	} catch (error) {
+		console.error(`Error fetching product ${id}: ${error}`);
+	}
+};
 
 export default function(state = defaultProduct, action) {
-  switch (action.type) {
-    case SET_PRODUCT:
-      return action.product;
-    default:
-      return state;
-  }
+	switch (action.type) {
+		case SET_PRODUCT:
+			return action.product;
+		default:
+			return state;
+	}
 }
