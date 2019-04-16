@@ -12,7 +12,7 @@ const Product = db.define('product', {
     description: {
         type: Sequelize.TEXT,
         defaultValue: '' // always expect to parse it
-        
+
     },
     price: {
         type: Sequelize.FLOAT,
@@ -24,7 +24,7 @@ const Product = db.define('product', {
     imageUrl: {
             type: Sequelize.STRING
     }
-}) 
+})
 
 
 
