@@ -28,7 +28,7 @@ async function seed() {
     productTemplate('Apple Newton', 'Stay on top of your daily tasks with a pocket planner.', 100, '/image/products/apple_newton.jpg'),
     productTemplate('Spot the Dog Beanie Baby', 'Pet without the mess', 8.97, '/image/products/spot_the_dog_beanie.jpg'),
     productTemplate('Nintendo 64', '', 150, '/image/products/nintendo64.jpeg')
-	].map(data => Product.create({data}));
+	].map(data => Product.create(data));
 
 	const products = await Promise.all(creatingProducts);
 
