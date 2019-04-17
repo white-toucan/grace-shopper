@@ -32,9 +32,13 @@ const setAllProducts = data => ({
  */
 export const getAllProductsThunk = () => {
 	return async dispatch => {
-		const {data} = await axios.get('/api/products');
-		dispatch(setAllProducts(data));
-		//could consider filtering product object and only using properties needed for allProducts page
+		try {
+			//could consider filtering product object and only using properties needed for allProducts page
+			const {data} = await axios.get('/api/products');
+			dispatch(setAllProducts(data));
+		} catch (error) {
+			console.error(error);
+		}
 	};
 };
 

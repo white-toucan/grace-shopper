@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {getAllProductsThunk} from '../store/product';
+import {getAllProductsThunk} from '../store/index';
 import {connect} from 'react-redux';
 import ProductCard from './productCard';
 

@@ -11,7 +11,7 @@ import history from '../history';
 const middlewares = [thunkMiddleware];
 const mockStore = configureMockStore(middlewares);
 
-describe('thunk creator', () => {
+describe('RX Store - product - thunk creator', () => {
 	let store;
 	let mockAxios;
 	let fakeAllProducts;
@@ -47,7 +47,7 @@ describe('thunk creator', () => {
 
 	describe('getAllProductsThunk', () => {
 		it('eventually dispatches the SET_ALL_PRODUCTS action', async () => {
-			mockAxios.onGet('/products').replyOnce(200, fakeAllProducts);
+			mockAxios.onGet('/api/products').replyOnce(200, fakeAllProducts);
 			await store.dispatch(getAllProductsThunk());
 			const actions = store.getActions();
 			expect(actions[0].type).to.be.equal('SET_ALL_PRODUCTS');
