@@ -12,8 +12,8 @@ describe('Product model', () => {
 		it('creates a product with a name, description, price, and imageurl', async () => {
 			const oneProduct = {
 				name: 'FloppyDisk',
-                price: 2.45,
-                imageUrl: 'abc'
+				price: 2.45,
+				imageUrl: 'abc'
 			};
 			const createdProduct = await Product.create(oneProduct);
 			expect(createdProduct).to.deep.include(oneProduct);

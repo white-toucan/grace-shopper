@@ -11,8 +11,10 @@ enzyme.configure({adapter});
 
 describe('Components - ProductCard', () => {
 	let productCard;
+	let fakeHistory = [];
 
 	beforeEach(() => {
+		fakeHistory = [];
 		productCard = shallow(
 			<ProductCard
 				product={{
@@ -21,11 +23,17 @@ describe('Components - ProductCard', () => {
 					name: 'Test Item',
 					price: 23.99
 				}}
+				history={fakeHistory}
 			/>
 		);
 	});
 
 	it('renders the product name in an h2 tag', () => {
 		expect(productCard.find('h2').text()).to.be.equal('Test Item');
+	});
+
+	it('pushes to history when the image is clicked', () => {
+		productCard.find('img').simulate('click');
+		expect(fakeHistory[0]).to.equal('/products/1');
 	});
 });
