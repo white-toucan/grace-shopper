@@ -54,7 +54,7 @@ router.put('/:id', async (req, res, next) => {
 
 		const product = await Product.findByPk(id);
 		if (!product) return res.sendStatus(404);
-		console.log('********* prduct uodate ', productUpdate);
+		
 		const updated = await product.update(productUpdate);
 		res.json(updated);
 	} catch (error) {
