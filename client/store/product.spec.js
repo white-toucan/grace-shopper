@@ -51,7 +51,7 @@ describe('RX Store - product - thunk creators', () => {
 			await store.dispatch(getAllProductsThunk());
 			const actions = store.getActions();
 			expect(actions[0].type).to.be.equal('SET_ALL_PRODUCTS');
-			expect(actions[0].data).to.be.deep.equal(fakeAllProducts);
+			expect(actions[0].productList).to.be.deep.equal(fakeAllProducts);
 		});
 	});
 
