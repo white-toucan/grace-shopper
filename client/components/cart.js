@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {findOrCreateCart} from '../store/index';
 import {connect} from 'react-redux';
-import CartItem from './cartItem' 
+import CartItem from './cartItem';
 
 export class Cart extends Component {
 	componentDidMount() {
@@ -14,9 +14,7 @@ export class Cart extends Component {
 		return (
 			<div className="cart">
 				<h1> CART </h1>
-				{cart.map(product => (
-					<CartItem product={product} key={product.id} />
-				))}
+				{cart.map(product => <CartItem product={product} key={product.id} />)}
 			</div>
 		);
 	}

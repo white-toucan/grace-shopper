@@ -30,8 +30,9 @@ const setSubtractFromCart = product => ({type: SET_SUBTRACT_FROM_CART, product})
 
 export const findOrCreateCart = userId => async dispatch => {
 	try {
-		const res = await axios.get(`/cart:${userId}`); // waiting for routes
-		dispatch(setCart(res.data || initialState));
+		const res = await axios.get(`/cart/${userId}`); // waiting for routes
+        console.log(res.data)
+        dispatch(setCart(res.data || initialState)); 
 	} catch (err) {
 		console.error(err);
 	}
@@ -39,7 +40,7 @@ export const findOrCreateCart = userId => async dispatch => {
 
 export const emptyCart = () => async dispatch => {
 	try {
-		const res = await axios.delete(`/cart:${userId}`); // waiting for routes
+		const res = await axios.delete(`/cart/${userId}`); // waiting for routes
 		dispatch(setRemoveCart(res.data));
 	} catch (error) {
 		console.log(error);
@@ -48,7 +49,7 @@ export const emptyCart = () => async dispatch => {
 
 export const addingToCart = product => async dispatch => {
 	try {
-		const res = await axios.post(`/cart:${userId}`, product);
+		const res = await axios.post(`/cart/${userId}`, product);
 		dispatch(setAddToCart(res.data));
 	} catch (error) {
 		console.log(error);
@@ -57,7 +58,7 @@ export const addingToCart = product => async dispatch => {
 
 export const subtractFromCart = product => async dispatch => {
 	try {
-		const res = await axios.delete(`/cart:${userId}`, product);
+		const res = await axios.delete(`/cart/${userId}`, product);
 		dispatch(setSubtractFromCart(res.data));
 	} catch (error) {
 		console.log(error);
