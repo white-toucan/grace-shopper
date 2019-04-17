@@ -1,27 +1,21 @@
 const router = require('express').Router();
 const Cart = require('../db/models/cart');
-const CartItems = require('../db/models/cartItems');
+const CartItem = require('../db/models/cartItem');
 
 // Getting or creating new cart
-router.get('/active', async (req, res, next) => {
-	if (!req.user) {
-		res.sendStatus(404);
-	}
-	else {
-		try {
-			const { id } = req.user;
-			let newCart = await Cart.findOrCreate({where: { userId: id, isActive: true } });
-			res.json(newCart);
-		} catch (error) {
-			next(error);
-		}
+router.get('/:userId/active', async (req, res, next) => {
+	try {
+		const userId = +req.params.userId;
+		let newCart = await Cart.findOrCreate({where: { userId, isActive: true } });
+		res.json(newCart);
+	} catch (error) {
+		next(error);
 	}
 });
 
 // Get all items in cart
 router.get('/:cartId', async (req, res, next) => {
-	console.log(req.user);
-	const cartId = parseInt(req.params.cartId, 10);
+	const cartId = +req.params.cartId;
 	try {
 		let products = await Cart.findByPk(cartId)
 			.then(cart => cart.getProducts());
@@ -35,11 +29,11 @@ router.get('/:cartId', async (req, res, next) => {
 
 // Add item to cart
 router.post('/:cartId/add/:productId', async (req, res, next) => {
-	const cartId = parseInt(req.params.cartId, 10);
-	const productId = parseInt(req.params.productId, 10);
-	const quantity = req.body.quantity ? Number(req.body.quantity) : 1;
+	const cartId = +req.params.cartId;
+	const productId = +req.params.productId;
+	const quantity = req.body.quantity ? +req.body.quantity : 1;
 	try {
-		await CartItems.create({cartId, productId, quantity});
+		await CartItem.create({cartId, productId, quantity});
 		res.sendStatus(200);
 	} catch (error) {
 		next(error);
@@ -48,11 +42,11 @@ router.post('/:cartId/add/:productId', async (req, res, next) => {
 
 // Update item quantity in cart
 router.put('/:cartId/update/:productId', async (req, res, next) => {
-	const cartId = parseInt(req.params.cartId, 10);
-	const productId = parseInt(req.params.productId, 10);
-	const quantity = parseInt(req.body.quantity, 10);
+	const cartId = +req.params.cartId;
+	const productId = +req.params.productId;
+	const quantity = +req.body.quantity;
 	try {
-		const entry = await CartItems.findOne({
+		const entry = await CartItem.findOne({
 			where: { cartId, productId }
 		});
 		if (entry) {
@@ -67,10 +61,10 @@ router.put('/:cartId/update/:productId', async (req, res, next) => {
 
 // Remove item from cart
 router.delete('/:cartId/remove/:productId', async (req, res, next) => {
-	const cartId = parseInt(req.params.cartId, 10);
-	const productId = parseInt(req.params.productId, 10);
+	const cartId = +req.params.cartId;
+	const productId = +req.params.productId;
 	try {
-		await CartItems.destroy({ where: { cartId, productId } });
+		await CartItem.destroy({ where: { cartId, productId } });
 		res.sendStatus(204);
 	} catch (error) {
 		next(error);

@@ -1,6 +1,6 @@
 const User = require('./user')
 const Cart = require('./cart');
-const CartItems = require('./cartItems');
+const CartItem = require('./cartItem');
 const Product = require('./product');
 
 /**
@@ -12,8 +12,8 @@ const Product = require('./product');
 
 User.hasMany(Cart);
 Cart.belongsTo(User);
-Cart.belongsToMany(Product, {through: CartItems, foreignKey: 'cartId'});
-Product.belongsToMany(Cart, {through: CartItems, foreignKey: 'productId'});
+Cart.belongsToMany(Product, {through: CartItem});
+Product.belongsToMany(Cart, {through: CartItem});
 /**
  * We'll export all of our models here, so that any time a module needs a model,
  * we can just require it from 'db/models'
@@ -23,6 +23,6 @@ Product.belongsToMany(Cart, {through: CartItems, foreignKey: 'productId'});
 module.exports = {
   User,
   Cart,
-  CartItems,
+  CartItem,
   Product
 }
