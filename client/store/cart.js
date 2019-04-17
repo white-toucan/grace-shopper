@@ -20,8 +20,8 @@ const initialState = {
  * ACTION CREATORS
  */
 // const findOrCreateCart = cart => ({type: FIND_OR_CREATE_CART, cart});
-const setAddToCart = product => ({type: SET_ADD_TO_CART, product});
 const setCart = cart => ({type: SET_CART, cart});
+const setAddToCart = product => ({type: SET_ADD_TO_CART, product});
 const setRemoveCart = () => ({type: SET_REMOVE_CART});
 const setSubtractFromCart = product => ({type: SET_SUBTRACT_FROM_CART, product});
 /**
@@ -64,7 +64,7 @@ export const subtractFromCart = product => async dispatch => {
 	}
 };
 
-const reducer = (prevState = initialState, action) => {
+export default function(prevState = initialState, action) {
 	let stateCopy = {...prevState};
 	switch (action.type) {
 		case SET_CART:
@@ -74,7 +74,7 @@ const reducer = (prevState = initialState, action) => {
 			stateCopy.cart = [];
 			return stateCopy;
 		case SET_ADD_TO_CART:
-			stateCopy.cart.push(product);
+			stateCopy.cart.push(action.product);
 			return stateCopy;
 		case SET_SUBTRACT_FROM_CART:
 			stateCopy = stateCopy.cart.filter(
@@ -86,6 +86,5 @@ const reducer = (prevState = initialState, action) => {
 	}
 };
 
-const store = createStore(reducer);
 
-export default store;
+
