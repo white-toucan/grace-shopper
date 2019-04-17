@@ -93,7 +93,6 @@
     "react-test-renderer": "^16.4.2",
     "redux-devtools-extension": "^2.13.5",
     "redux-mock-store": "^1.5.3",
-    "sinon": "^7.3.2",
     "supertest": "^4.0.2",
     "webpack": "^4.16.4",
     "webpack-cli": "^3.1.0"
