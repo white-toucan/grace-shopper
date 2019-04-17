@@ -20,7 +20,7 @@ const setProduct = product => ({type: SET_PRODUCT, product});
  */
 export const getProduct = id => async dispatch => {
 	try {
-		const product = await axios.get(`/api/product/${id}`);
+		const product = await axios.get(`/api/products/${id}`);
 		return dispatch(setProduct(product));
 	} catch (error) {
 		console.error(`Error fetching product ${id}: ${error}`);
