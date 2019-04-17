@@ -64,7 +64,7 @@ export default function(state = initialState, action) {
 			stateCopy.selectedProduct = action.product;
 			return stateCopy;
 		case SET_ALL_PRODUCTS:
-			stateCopy.allProductsList = action.data;
+			stateCopy.allProductsList = action.productList;
 			return stateCopy;
 		default:
 			return state;

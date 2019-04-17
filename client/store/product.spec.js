@@ -1,7 +1,7 @@
 /* global describe beforeEach afterEach it */
 
 import {expect} from 'chai';
-import {getAllProductsThunk} from './product';
+import {getAllProductsThunk, getProductByIdThunk} from './product';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import configureMockStore from 'redux-mock-store';
@@ -11,7 +11,7 @@ import history from '../history';
 const middlewares = [thunkMiddleware];
 const mockStore = configureMockStore(middlewares);
 
-describe('RX Store - product - thunk creator', () => {
+describe('RX Store - product - thunk creators', () => {
 	let store;
 	let mockAxios;
 	let fakeAllProducts;
@@ -52,6 +52,16 @@ describe('RX Store - product - thunk creator', () => {
 			const actions = store.getActions();
 			expect(actions[0].type).to.be.equal('SET_ALL_PRODUCTS');
 			expect(actions[0].data).to.be.deep.equal(fakeAllProducts);
+		});
+	});
+
+	describe('getAllProductByIdThunk', () => {
+		it('eventually dispatches the SET_SELECTED_PRODUCT action', async () => {
+			mockAxios.onGet('/api/products/1').replyOnce(200, fakeAllProducts[0]);
+			await store.dispatch(getProductByIdThunk(1));
+			const actions = store.getActions();
+			expect(actions[0].type).to.be.equal('SET_SELECTED_PRODUCT');
+			expect(actions[0].product).to.be.deep.equal(fakeAllProducts[0]);
 		});
 	});
 });
