@@ -10,7 +10,7 @@ const Product = require('./product');
  *    BlogPost.belongsTo(User)
  */
 
-User.hasOne(Cart);
+User.hasMany(Cart);
 Cart.belongsTo(User);
 Cart.belongsToMany(Product, {through: CartItems, foreignKey: 'cartId'});
 Product.belongsToMany(Cart, {through: CartItems, foreignKey: 'productId'});
