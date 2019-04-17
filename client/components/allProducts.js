@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {getAllProductsThunk} from '../store/index';
+import {getAllProductsThunk} from '../store';
 import {connect} from 'react-redux';
 import ProductCard from './productCard';
 
@@ -15,7 +15,7 @@ export class AllProducts extends Component {
 			<div className="allProducts">
 				<h1>All Products Container</h1>
 				{allProductsList.map(product => (
-					<ProductCard product={product} key={product.id} />
+					<ProductCard history={this.props.history} product={product} key={product.id} />
 				))}
 			</div>
 		);
