@@ -22,9 +22,9 @@ export const setSelectedProduct = product => ({
 	product
 });
 
-const setAllProducts = data => ({
+const setAllProducts = productList => ({
 	type: SET_ALL_PRODUCTS,
-	data
+	productList
 });
 
 /**
