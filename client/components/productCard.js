@@ -1,31 +1,46 @@
-import React from 'react';
-import {setSelectedProduct} from '../store/index';
+import React, {Component} from 'react';
+import {setSelectedProduct} from '../store';
 import {connect} from 'react-redux';
 
-export function ProductCard(props) {
-	let {product} = props;
-	return (
-		<div className="product" key={product.id}>
-			<img
-				src={product.imageUrl}
-				height="200"
-				width="200"
-				onClick={() => props.onClickMoveToProduct(product)}
-			/>
-			<h2>{product.name}</h2>
-			<h3>{product.price}</h3>
-		</div>
-	);
+export class ProductCard extends Component {
+	constructor(props) {
+		super(props);
+		this.moveToProduct = this.moveToProduct.bind(this);
+	}
+
+	moveToProduct(id) {
+		this.props.history.push(`/products/${id}`);
+	}
+
+	render() {
+		let {imageUrl, name, price, id} = this.props.product;
+		return (
+			<div className="product">
+				<img
+					src={imageUrl}
+					height="200"
+					width="200"
+					onClick={() => this.moveToProduct(id)}
+				/>
+				<h2>{name}</h2>
+				<h3>{price}</h3>
+			</div>
+		);
+	}
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapStateToProps = state => {
 	return {
-		onClickMoveToProduct: function(product) {
+		selectedProduct: state.product.selectedProduct
+	}
+}
+
+const mapDispatchToProps = dispatch => {
+	return {
+		setSelectedProduct: function(product) {
 			dispatch(setSelectedProduct(product));
-			// TODO: correct the front end route name
-			ownProps.history.push(`/products/${product.id}`);
 		}
 	};
 };
 
-export default connect(null, mapDispatchToProps)(ProductCard);
+export default connect(mapStateToProps, mapDispatchToProps)(ProductCard);

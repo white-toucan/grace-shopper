@@ -42,6 +42,17 @@ export const getAllProductsThunk = () => {
 	};
 };
 
+export const getProductByIdThunk = id => {
+	return async dispatch => {
+		try {
+			const {data} = await axios.get(`/api/products/${id}`);
+			dispatch(setSelectedProduct(data));
+		} catch (error) {
+			console.error(error);
+		}
+	};
+};
+
 /**
  * REDUCER
  */

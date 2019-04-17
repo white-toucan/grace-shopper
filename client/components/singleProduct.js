@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {getProduct} from '../store';
+import {getProductByIdThunk} from '../store';
 
 export class SingleProduct extends Component {
 	componentDidMount() {
@@ -28,11 +28,11 @@ export class SingleProduct extends Component {
 }
 
 const mapState = state => ({
-	selectedProduct: state.selectedProduct
+	selectedProduct: state.product.selectedProduct
 });
 
 const mapDispatch = dispatch => ({
-	getProduct: id => dispatch(getProduct(id))
+	getProduct: id => dispatch(getProductByIdThunk(id))
 });
 
 export default connect(mapState, mapDispatch)(SingleProduct);
