@@ -9,13 +9,13 @@ export class Cart extends Component {
 	}
 
 	render() {
-		const {cart} = this.props
-		console.log(cart)
+		const {cart} = this.props;
 
 		return (
 			<div className="cart">
 				<h1> CART </h1>
-				{cart && cart.map(product => <CartItem product={product} key={product.id} />)}
+				{cart &&
+					cart.map(product => <CartItem product={product} key={product.id} />)}
 			</div>
 		);
 	}

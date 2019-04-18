@@ -39,7 +39,7 @@ export class CartItem extends Component {
 				/>
 				<h2>{product.name}</h2>
 				<h3>{product.price}</h3>
-				<h3>{product.cartItems.quantity}</h3>
+				{/* <h3>{product.cartItems.quantity}</h3> */}
 				<button
 					onClick={() => this.onClickSubtractFromCart(product)}
 					type="button"

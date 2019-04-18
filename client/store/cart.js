@@ -27,11 +27,10 @@ const setSubtractFromCart = product => ({type: SET_SUBTRACT_FROM_CART, product})
 /**
  * THUNK CREATORS
  */
-
+//consider renaming findOrCreate cart to GetCart
 export const findOrCreateCart = userId => async dispatch => {
 	try {
-		//TODO: update with the right route
-		const res = await axios.get(`/api/carts/${userId}/active`); // waiting for routes
+		const res = await axios.get(`/api/cartItems`); // waiting for routes
         console.log(res.data)
         dispatch(setCart(res.data || initialState)); 
 	} catch (err) {
@@ -39,21 +38,21 @@ export const findOrCreateCart = userId => async dispatch => {
 	}
 };
 
-export const emptyCart = (userId) => async dispatch => {
-	try {
-		//TODO: update with the right route
-		await axios.delete(`api/carts/${userId}/active`); // waiting for routes
-		dispatch(setRemoveCart());
-	} catch (error) {
-		console.log(error);
-	}
-};
+// export const emptyCart = (userId) => async dispatch => {
+// 	try {
+// 		//TODO: update with the right route
+// 		await axios.delete(`api/carts/${userId}/active`); // waiting for routes
+// 		dispatch(setRemoveCart());
+// 	} catch (error) {
+// 		console.log(error);
+// 	}
+// };
 
 export const addingToCart = product => async dispatch => {
 	try {
-		//TODO: update with the right route
-		const res = await axios.post(`/api/carts/${cartId}/add/:productId`, product);
-		dispatch(setAddToCart(res.data));
+		const productId = product.id
+		await axios.post(`/api/cartItems/${productId}`);
+		dispatch(setAddToCart(product));
 	} catch (error) {
 		console.log(error);
 	}
@@ -61,9 +60,9 @@ export const addingToCart = product => async dispatch => {
 
 export const subtractFromCart = product => async dispatch => {
 	try {
-		//TODO: update with the right route
-		const res = await axios.delete(`/carts/${userId}`, product);
-		dispatch(setSubtractFromCart(res.data));
+		const productId = product.id
+		await axios.delete(`/api/cartItems/${productId}`);
+		dispatch(setSubtractFromCart(product));
 	} catch (error) {
 		console.log(error);
 	}
@@ -73,16 +72,16 @@ export default function(prevState = initialState, action) {
 	let stateCopy = {...prevState};
 	switch (action.type) {
 		case SET_CART:
-			stateCopy.cart = action.cart;
+			stateCopy.cartItems = action.cart;
 			return stateCopy;
 		case SET_REMOVE_CART:
 			stateCopy.cartItems = [];
 			return stateCopy;
 		case SET_ADD_TO_CART:
-			stateCopy.cartItems.push(action.product);
+			stateCopy.cartItems = [...stateCopy.cartItems, action.product]
 			return stateCopy;
 		case SET_SUBTRACT_FROM_CART:
-			stateCopy = stateCopy.cartIems.filter(
+			stateCopy.cartItems = stateCopy.cartItems.filter(
 				product => product.id !== action.product.id
 			);
 			return stateCopy;
