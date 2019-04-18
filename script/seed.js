@@ -22,18 +22,43 @@ async function seed() {
 	const creatingProducts = [
 		productTemplate('Garfield', 'The friendly cat', 9.99),
 		productTemplate('Golden Girls', 'Season 1', 13.99),
-    productTemplate('Motorola Beeper', 'Get all your messages on the go', 21.99, '/images/products/motorola_beeper.jpg'),
-    productTemplate('Sony Walkman', 'Take your music everywhere. Requires two AA batteries. Batteries not included.', 24.99, '/images/products/sony_walkman.jpg'),
-    productTemplate('Golden Parachute Pants', 'Comfort and style', 8.88, '/images/products/golden_hammer_pants.jpg'),
-    productTemplate('Apple Newton', 'Stay on top of your daily tasks with a pocket planner.', 100, '/image/products/apple_newton.jpg'),
-    productTemplate('Spot the Dog Beanie Baby', 'Pet without the mess', 8.97, '/image/products/spot_the_dog_beanie.jpg'),
-    productTemplate('Nintendo 64', '', 150, '/image/products/nintendo64.jpeg')
+		productTemplate(
+			'Motorola Beeper',
+			'Get all your messages on the go',
+			21.99,
+			'/images/products/motorola_beeper.jpg'
+		),
+		productTemplate(
+			'Sony Walkman',
+			'Take your music everywhere. Requires two AA batteries. Batteries not included.',
+			24.99,
+			'/images/products/sony_walkman.jpg'
+		),
+		productTemplate(
+			'Golden Parachute Pants',
+			'Comfort and style',
+			8.88,
+			'/images/products/golden_hammer_pants.jpg'
+		),
+		productTemplate(
+			'Apple Newton',
+			'Stay on top of your daily tasks with a pocket planner.',
+			100,
+			'/images/products/apple_newton.jpg'
+		),
+		productTemplate(
+			'Spot the Dog Beanie Baby',
+			'Pet without the mess',
+			8.97,
+			'/images/products/spot_the_dog_beanie.jpg'
+		),
+		productTemplate('Nintendo 64', '', 150, '/images/products/nintendo64.jpeg')
 	].map(data => Product.create(data));
 
 	const products = await Promise.all(creatingProducts);
 
-  console.log(`seeded ${users.length} users`);
-  console.log(`seeded ${products.length} products`);
+	console.log(`seeded ${users.length} users`);
+	console.log(`seeded ${products.length} products`);
 	console.log(`seeded successfully`);
 }
 
