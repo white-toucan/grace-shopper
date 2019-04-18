@@ -9,12 +9,13 @@ export class Cart extends Component {
 	}
 
 	render() {
-		const {cart} = this.props;
+		const {cart} = this.props
+		console.log(cart)
 
 		return (
 			<div className="cart">
 				<h1> CART </h1>
-				{cart.map(product => <CartItem product={product} key={product.id} />)}
+				{cart && cart.map(product => <CartItem product={product} key={product.id} />)}
 			</div>
 		);
 	}
@@ -22,7 +23,7 @@ export class Cart extends Component {
 
 const mapStateToProps = state => {
 	return {
-		cart: state.cart.cart
+		cart: state.cart.cartItems
 	};
 };
 
