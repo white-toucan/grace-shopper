@@ -30,7 +30,6 @@ describe('Me routes', () => {
         .get('/api/me/cart')
         .set('cookie', cookie)
         .expect(200)
-      console.log(myCart)
       expect(myCart.body.id).to.be.a('number');
     });
 

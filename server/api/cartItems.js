@@ -2,20 +2,15 @@ const router = require('express').Router();
 const Cart = require('../db/models/cart');
 const CartItem = require('../db/models/cartItem');
 
-// Getting or creating new cart
-router.get('/:userId/active', async (req, res, next) => {
-	try {
-		const userId = +req.params.userId;
-		let [cart] = await Cart.findOrCreate({where: { userId, isActive: true } });
-		res.json(cart);
-	} catch (error) {
-		next(error);
-	}
-});
-
 // Get all items in cart
-router.get('/:cartId', async (req, res, next) => {
-	const cartId = +req.params.cartId;
+router.use('/*', (req, res, next) => {
+	if (!req.user) return res.sendStatus(404);
+	next();
+})
+
+router.get('/', async (req, res, next) => {
+	const {cartId} = req.session;
+
 	try {
 		let products = await Cart.findByPk(cartId)
 			.then(cart => cart.getProducts());
@@ -28,8 +23,8 @@ router.get('/:cartId', async (req, res, next) => {
 });
 
 // Add item to cart
-router.post('/:cartId/add/:productId', async (req, res, next) => {
-	const cartId = +req.params.cartId;
+router.post('/:productId', async (req, res, next) => {
+	const {cartId} = req.session;
 	const productId = +req.params.productId;
 	const quantity = req.body.quantity ? +req.body.quantity : 1;
 	try {
@@ -41,8 +36,8 @@ router.post('/:cartId/add/:productId', async (req, res, next) => {
 });
 
 // Update item quantity in cart
-router.put('/:cartId/update/:productId', async (req, res, next) => {
-	const cartId = +req.params.cartId;
+router.put('/:productId', async (req, res, next) => {
+	const {cartId} = req.session;
 	const productId = +req.params.productId;
 	const quantity = +req.body.quantity;
 	try {
@@ -60,8 +55,8 @@ router.put('/:cartId/update/:productId', async (req, res, next) => {
 });
 
 // Remove item from cart
-router.delete('/:cartId/remove/:productId', async (req, res, next) => {
-	const cartId = +req.params.cartId;
+router.delete('/:productId', async (req, res, next) => {
+	const {cartId} = req.session;
 	const productId = +req.params.productId;
 	try {
 		await CartItem.destroy({ where: { cartId, productId } });
