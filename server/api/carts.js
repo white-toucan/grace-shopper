@@ -6,8 +6,8 @@ const CartItem = require('../db/models/cartItem');
 router.get('/:userId/active', async (req, res, next) => {
 	try {
 		const userId = +req.params.userId;
-		let newCart = await Cart.findOrCreate({where: { userId, isActive: true } });
-		res.json(newCart);
+		let [cart] = await Cart.findOrCreate({where: { userId, isActive: true } });
+		res.json(cart);
 	} catch (error) {
 		next(error);
 	}
