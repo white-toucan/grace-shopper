@@ -23,6 +23,7 @@ describe('Components - CartItem', () => {
 					name: 'Test Item',
 					price: 23.99
 				}}
+				setSelectedProduct={() => {}}
 				history={fakeHistory}
 			/>
 		);
@@ -35,7 +36,7 @@ describe('Components - CartItem', () => {
 	it('pushes to history when the image is clicked', () => {
 		cartItem.find('img').simulate('click');
 		expect(fakeHistory[0]).to.equal('/products/4');
-    });
-    
-    // note testing on add and remove buttons could be added
+	});
+
+	// note testing on add and remove buttons could be added
 });

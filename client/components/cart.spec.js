@@ -26,14 +26,10 @@ describe('Components - Cart', () => {
 	let arr = [object1, object2];
 
 	beforeEach(() => {
-		cartItems = shallow(
-			<Cart cart={arr} findOrCreateCart={() => {}} />
-		);
+		cartItems = shallow(<Cart cart={arr} getCartThunk={() => {}} />);
 	});
 
 	it('renders a map of all cart items  length plus one h1', () => {
-		expect(cartItems.find('.cart').children()).to.have.lengthOf(
-			1 + arr.length
-		);
+		expect(cartItems.find('.cart').children()).to.have.lengthOf(1 + arr.length);
 	});
 });

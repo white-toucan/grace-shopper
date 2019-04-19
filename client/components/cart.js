@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
-import {findOrCreateCart} from '../store/index';
+import {getCartThunk} from '../store/index';
 import {connect} from 'react-redux';
 import CartItem from './cartItem';
 
 export class Cart extends Component {
 	componentDidMount() {
-		this.props.findOrCreateCart();
+		this.props.getCartThunk();
 	}
 
 	render() {
@@ -29,8 +29,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		findOrCreateCart: function() {
-			dispatch(findOrCreateCart());
+		getCartThunk: function() {
+			dispatch(getCartThunk());
 		}
 	};
 };
