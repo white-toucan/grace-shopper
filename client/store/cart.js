@@ -19,9 +19,8 @@ const initialState = {
 /**
  * ACTION CREATORS
  */
-// const getCartThunk = cart => ({type: FIND_OR_CREATE_CART, cart});
-const setCart = cart => ({type: SET_CART, cart});
-const setAddToCart = product => ({type: SET_ADD_TO_CART, product});
+const setCart = cartItems => ({type: SET_CART, cartItems});
+export const setAddToCart = product => ({type: SET_ADD_TO_CART, product});
 const setRemoveCart = () => ({type: SET_REMOVE_CART});
 const setSubtractFromCart = product => ({
 	type: SET_SUBTRACT_FROM_CART,
@@ -30,11 +29,9 @@ const setSubtractFromCart = product => ({
 /**
  * THUNK CREATORS
  */
-//consider renaming findOrCreate cart to GetCart
 export const getCartThunk = userId => async dispatch => {
 	try {
 		const res = await axios.get(`/api/cartItems`); // waiting for routes
-		console.log(res.data);
 		dispatch(setCart(res.data || initialState));
 	} catch (err) {
 		console.error(err);
@@ -51,7 +48,7 @@ export const getCartThunk = userId => async dispatch => {
 // 	}
 // };
 
-export const addingToCart = product => async dispatch => {
+export const addingToCartThunk = product => async dispatch => {
 	try {
 		const productId = product.id;
 		await axios.post(`/api/cartItems/${productId}`);
@@ -61,7 +58,7 @@ export const addingToCart = product => async dispatch => {
 	}
 };
 
-export const subtractFromCart = product => async dispatch => {
+export const subtractFromCartThunk = product => async dispatch => {
 	try {
 		const productId = product.id;
 		await axios.delete(`/api/cartItems/${productId}`);
@@ -75,7 +72,7 @@ export default function(prevState = initialState, action) {
 	let stateCopy = {...prevState};
 	switch (action.type) {
 		case SET_CART:
-			stateCopy.cartItems = action.cart;
+			stateCopy.cartItems = action.cartItems;
 			return stateCopy;
 		case SET_REMOVE_CART:
 			stateCopy.cartItems = [];

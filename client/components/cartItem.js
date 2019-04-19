@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {
 	setSelectedProduct,
-	addingToCart,
-	subtractFromCart
+	addingToCartThunk,
+	subtractFromCartThunk
 } from '../store/index';
 import {connect} from 'react-redux';
 
@@ -19,11 +19,11 @@ export class CartItem extends Component {
 	}
 
 	onClickAddToCart(product) {
-		this.props.addingToCart(product);
+		this.props.addingToCartThunk(product);
 	}
 
-	onClickSubtractFromCart(product) {
-		this.props.subtractFromCart(product);
+	onClicksubtractFromCartThunk(product) {
+		this.props.subtractFromCartThunk(product);
 	}
 
 	render() {
@@ -41,7 +41,7 @@ export class CartItem extends Component {
 				<h3>{product.price}</h3>
 				{/* <h3>{product.cartItems.quantity}</h3> */}
 				<button
-					onClick={() => this.onClickSubtractFromCart(product)}
+					onClick={() => this.onClicksubtractFromCartThunk(product)}
 					type="button"
 				>
 					{' '}
@@ -67,11 +67,11 @@ const mapDispatchToProps = dispatch => {
 		setSelectedProduct: function(product) {
 			dispatch(setSelectedProduct(product));
 		},
-		addingToCart: function(product) {
-			dispatch(addingToCart(product));
+		addingToCartThunk: function(product) {
+			dispatch(addingToCartThunk(product));
 		},
-		subtractFromCart: function(product) {
-			dispatch(subtractFromCart(product));
+		subtractFromCartThunk: function(product) {
+			dispatch(subtractFromCartThunk(product));
 		}
 	};
 };

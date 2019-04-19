@@ -31,6 +31,7 @@ describe('RX Store - User - thunk creators', () => {
 		it('eventually dispatches the GET USER action', async () => {
 			const fakeUser = {email: 'Cody'};
 			mockAxios.onGet('/auth/me').replyOnce(200, fakeUser);
+			mockAxios.onGet('/api/me/cart').replyOnce(200);
 			await store.dispatch(me());
 			const actions = store.getActions();
 			expect(actions[0].type).to.be.equal('GET_USER');
