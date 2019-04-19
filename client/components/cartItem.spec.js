@@ -21,7 +21,7 @@ describe('Components - CartItem', () => {
 					id: 4,
 					imageUrl: 'http://www.test.com/url.jpg',
 					name: 'Test Item',
-					price: 23.99
+					price: 2399
 				}}
 				history={fakeHistory}
 			/>

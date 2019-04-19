@@ -12,7 +12,7 @@ describe('Product model', () => {
 		it('creates a product with a name, description, price, and imageurl', async () => {
 			const oneProduct = {
 				name: 'FloppyDisk',
-				price: 2.45,
+				price: 245,
 				imageUrl: 'abc'
 			};
 			const createdProduct = await Product.create(oneProduct);

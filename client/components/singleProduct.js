@@ -21,7 +21,7 @@ addingToCart(product){
 				</div>
 				<div className="product-info">
 					<h3 className="product-info-name">{name}</h3>
-					<p className="product-price">{price}</p>
+					<p className="product-price">{`$${price/100}`}</p>
 					<p className="product-desc">{description}</p>
 					<button className="add-to-cart" type="button" onClick={() => this.addingToCart(this.props.selectedProduct)}>
 						Add to Cart

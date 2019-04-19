@@ -17,13 +17,13 @@ export class ProductCard extends Component {
 		return (
 			<div className="product">
 				<img
-					src={imageUrl}
+					src={imageUrl ? imageUrl:'./images/products/No-Image-Available.jpg'}
 					height="200"
 					width="200"
 					onClick={() => this.moveToProduct(id)}
 				/>
 				<h2>{name}</h2>
-				<h3>{price}</h3>
+				<h3>{`$${price/100}`}</h3>
 			</div>
 		);
 	}

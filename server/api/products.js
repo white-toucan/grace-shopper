@@ -12,7 +12,7 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
 	try {
-		const id = parseInt(req.params.id, 10);
+		const id = +req.params.id;
 		const product = await Product.findByPk(id);
 		if (!product) {
 			res.sendStatus(404);
@@ -41,7 +41,7 @@ router.post('/', async (req, res, next) => {
 });
 
 router.put('/:id', async (req, res, next) => {
-	const id = parseInt(req.params.id, 10);
+	const id = +req.params.id;
 	try {
 		const productKeys = ['name', 'description', 'price', 'imageUrl'];
 
@@ -63,7 +63,7 @@ router.put('/:id', async (req, res, next) => {
 
 router.delete('/:id', async (req, res, next) => {
 	try {
-		const id = parseInt(req.params.id, 10);
+		const id = +req.params.id;
 		await Product.destroy({
 			where: {
 				id: id

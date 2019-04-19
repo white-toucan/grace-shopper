@@ -20,24 +20,24 @@ async function seed() {
 	});
 
 	const creatingProducts = [
-		productTemplate('Garfield', 'The friendly cat', 9.99),
-		productTemplate('Golden Girls', 'Season 1', 13.99),
+		productTemplate('Garfield', 'The friendly cat', 999),
+		productTemplate('Golden Girls', 'Season 1', 1399),
 		productTemplate(
 			'Motorola Beeper',
 			'Get all your messages on the go',
-			21.99,
+			2199,
 			'/images/products/motorola_beeper.jpg'
 		),
 		productTemplate(
 			'Sony Walkman',
 			'Take your music everywhere. Requires two AA batteries. Batteries not included.',
-			24.99,
+			2499,
 			'/images/products/sony_walkman.jpg'
 		),
 		productTemplate(
 			'Golden Parachute Pants',
 			'Comfort and style',
-			8.88,
+			888,
 			'/images/products/golden_hammer_pants.jpg'
 		),
 		productTemplate(
@@ -49,7 +49,7 @@ async function seed() {
 		productTemplate(
 			'Spot the Dog Beanie Baby',
 			'Pet without the mess',
-			8.97,
+			897,
 			'/images/products/spot_the_dog_beanie.jpg'
 		),
 		productTemplate('Nintendo 64', '', 150, '/images/products/nintendo64.jpeg')
