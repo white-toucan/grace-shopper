@@ -19,20 +19,20 @@ const initialState = {
 /**
  * ACTION CREATORS
  */
-// const findOrCreateCart = cart => ({type: FIND_OR_CREATE_CART, cart});
-const setCart = cart => ({type: SET_CART, cart});
-const setAddToCart = product => ({type: SET_ADD_TO_CART, product});
+const setCart = cartItems => ({type: SET_CART, cartItems});
+export const setAddToCart = product => ({type: SET_ADD_TO_CART, product});
 const setRemoveCart = () => ({type: SET_REMOVE_CART});
-const setSubtractFromCart = product => ({type: SET_SUBTRACT_FROM_CART, product});
+const setSubtractFromCart = product => ({
+	type: SET_SUBTRACT_FROM_CART,
+	product
+});
 /**
  * THUNK CREATORS
  */
-//consider renaming findOrCreate cart to GetCart
-export const findOrCreateCart = userId => async dispatch => {
+export const getCartThunk = userId => async dispatch => {
 	try {
 		const res = await axios.get(`/api/cartItems`); // waiting for routes
-        console.log(res.data)
-        dispatch(setCart(res.data || initialState)); 
+		dispatch(setCart(res.data || initialState));
 	} catch (err) {
 		console.error(err);
 	}
@@ -48,9 +48,9 @@ export const findOrCreateCart = userId => async dispatch => {
 // 	}
 // };
 
-export const addingToCart = product => async dispatch => {
+export const addingToCartThunk = product => async dispatch => {
 	try {
-		const productId = product.id
+		const productId = product.id;
 		await axios.post(`/api/cartItems/${productId}`);
 		dispatch(setAddToCart(product));
 	} catch (error) {
@@ -58,9 +58,9 @@ export const addingToCart = product => async dispatch => {
 	}
 };
 
-export const subtractFromCart = product => async dispatch => {
+export const subtractFromCartThunk = product => async dispatch => {
 	try {
-		const productId = product.id
+		const productId = product.id;
 		await axios.delete(`/api/cartItems/${productId}`);
 		dispatch(setSubtractFromCart(product));
 	} catch (error) {
@@ -72,13 +72,13 @@ export default function(prevState = initialState, action) {
 	let stateCopy = {...prevState};
 	switch (action.type) {
 		case SET_CART:
-			stateCopy.cartItems = action.cart;
+			stateCopy.cartItems = action.cartItems;
 			return stateCopy;
 		case SET_REMOVE_CART:
 			stateCopy.cartItems = [];
 			return stateCopy;
 		case SET_ADD_TO_CART:
-			stateCopy.cartItems = [...stateCopy.cartItems, action.product]
+			stateCopy.cartItems = [...stateCopy.cartItems, action.product];
 			return stateCopy;
 		case SET_SUBTRACT_FROM_CART:
 			stateCopy.cartItems = stateCopy.cartItems.filter(
@@ -88,7 +88,4 @@ export default function(prevState = initialState, action) {
 		default:
 			return prevState;
 	}
-};
-
-
-
+}

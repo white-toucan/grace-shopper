@@ -1,16 +1,15 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {getProductByIdThunk, addingToCart} from '../store';
+import {getProductByIdThunk, addingToCartThunk} from '../store';
 
 export class SingleProduct extends Component {
 	componentDidMount() {
 		this.props.getProduct(this.props.match.params.productId);
 	}
 
-
-addingToCart(product){
-	this.props.addingToCart(product)
-}
+	addingToCartThunk(product) {
+		this.props.addingToCartThunk(product);
+	}
 
 	render() {
 		const {name, price, description, imageUrl} = this.props.selectedProduct;
@@ -23,7 +22,11 @@ addingToCart(product){
 					<h3 className="product-info-name">{name}</h3>
 					<p className="product-price">{`$${price/100}`}</p>
 					<p className="product-desc">{description}</p>
-					<button className="add-to-cart" type="button" onClick={() => this.addingToCart(this.props.selectedProduct)}>
+					<button
+						className="add-to-cart"
+						type="button"
+						onClick={() => this.addingToCartThunk(this.props.selectedProduct)}
+					>
 						Add to Cart
 					</button>
 				</div>
@@ -38,7 +41,7 @@ const mapState = state => ({
 
 const mapDispatch = dispatch => ({
 	getProduct: id => dispatch(getProductByIdThunk(id)),
-	addingToCart: product => dispatch(addingToCart(product))
+	addingToCartThunk: product => dispatch(addingToCartThunk(product))
 });
 
 export default connect(mapState, mapDispatch)(SingleProduct);
