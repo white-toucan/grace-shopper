@@ -78,7 +78,7 @@ export default function(prevState = initialState, action) {
 			stateCopy.cartItems = [];
 			return stateCopy;
 		case SET_ADD_TO_CART:
-			stateCopy.cartItems.map(product => (
+			stateCopy.cartItems = stateCopy.cartItems.map(product => (
 				product.name === action.product.name
 				? action.product
 				: product
