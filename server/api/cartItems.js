@@ -15,8 +15,7 @@ router.get('/', async (req, res, next) => {
 		let products = await Cart.findByPk(cartId)
 			.then(cart => cart.getProducts());
 
-		if (products) res.json(products);
-		else res.sendStatus(404);
+		res.json(products || []);
 	} catch (error) {
 		next(error);
 	}
@@ -28,8 +27,17 @@ router.post('/:productId', async (req, res, next) => {
 	const productId = +req.params.productId;
 	const quantity = req.body.quantity ? +req.body.quantity : 1;
 	try {
-		await CartItem.create({cartId, productId, quantity});
-		res.sendStatus(200);
+		let [cartItem, created] = await CartItem.findOrCreate({
+			where: {
+				cartId, productId
+			},
+			defaults: {cartId, productId, quantity}
+		});
+
+		if (!created) {
+			cartItem.update({quantity: cartItem.quantity + quantity});
+		}
+		res.json(cartItem);
 	} catch (error) {
 		next(error);
 	}

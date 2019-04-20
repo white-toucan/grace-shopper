@@ -30,7 +30,7 @@ export class CartItem extends Component {
 		let {product} = this.props;
 
 		return (
-			<div className="cartItem" key={product.id}>
+			<div className="cartItem">
 				<img
 					src={product.imageUrl}
 					height="200"
