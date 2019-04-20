@@ -5,7 +5,7 @@ import {
 	getCartThunk,
 	emptyCart,
 	addingToCartThunk,
-	subtractFromCartThunk,
+	deleteFromCartThunk,
 	setAddToCart
 } from '../../../client/store';
 import axios from 'axios';
@@ -86,13 +86,13 @@ describe('RX Store - cart - thunk creators', () => {
 		});
 	});
 
-	describe('subtractFromCartThunk', () => {
+	describe('deleteFromCartThunk', () => {
 		it('eventually dispatches the SET_SUBTRACT_FROM_CART action', async () => {
 			mockAxios
 				.onDelete(`/api/cartItems/${cartItem2.id}`)
 				.replyOnce(204, cartItem2);
 			await store.dispatch(setAddToCart(cartItem2));
-			await store.dispatch(subtractFromCartThunk(cartItem2));
+			await store.dispatch(deleteFromCartThunk(cartItem2));
 			const actions = store.getActions();
 			expect(actions[1].type).to.be.equal('SET_SUBTRACT_FROM_CART');
 			expect(actions[0].product).to.be.deep.equal(cartItem2);

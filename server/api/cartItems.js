@@ -15,7 +15,14 @@ router.get('/', async (req, res, next) => {
 		let products = await Cart.findByPk(cartId)
 			.then(cart => cart.getProducts());
 
-		res.json(products || []);
+		let productsRes = products.map(({id, name, price, imageUrl, cartItem}) => ({
+			id,
+			name,
+			price,
+			imageUrl,
+			quantity: cartItem.quantity
+		}))
+		res.json(productsRes || []);
 	} catch (error) {
 		next(error);
 	}
