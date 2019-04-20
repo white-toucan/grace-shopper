@@ -10,7 +10,8 @@ const config = {
   },
   admin: {
     email: 'admin@email.com',
-    password: '!@#$%^'
+    password: '!@#$%^',
+    isAdmin: true
   }
 };
 
@@ -19,6 +20,7 @@ class LoggedInUser {
   constructor(user) {
     this.email = user.email;
     this.password = user.password;
+    this.isAdmin = user.isAdmin || false;
     this.req = request(app);
     this.cookie;
     this.id;
@@ -27,8 +29,12 @@ class LoggedInUser {
   async login() {
     try {
       const loggedIn = await this.req
-      .get('/auth/login')
-      .send(this.user)
+      .post('/auth/login')
+      .send({
+        email: this.email,
+        password: this.password,
+        isAdmin: this.isAdmin
+      });
     this.cookie = loggedIn.headers['set-cookie'];
     this.id = loggedIn.body.id;
     } catch (err) {
@@ -40,15 +46,12 @@ class LoggedInUser {
 const authUser = new LoggedInUser(config.user); const authAdmin = new LoggedInUser(config.admin);
 
 before(async () => {
-  db.sync({ force: true });
+  await db.sync({force: true});
 
-  const creatingUsers = Object.values(config).map(person => User.create(person));
-
-  await Promise.all(creatingUsers);
   await Promise.all([
-    authUser.login(),
-    authAdmin.login()
-  ]).then(users => console.log(`Logged in ${users.length} users`));
+    User.create(config.user),
+    User.create(config.admin)
+  ]);
 });
 
 after(() => db.close());
