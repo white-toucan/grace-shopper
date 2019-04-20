@@ -1,0 +1,59 @@
+const request = require('supertest');
+const db = require('../../../server/db');
+const app = require('../../../server');
+const User = db.model('user');
+
+const config = {
+  user: {
+    email: 'cody@email.com',
+    password: '123456'
+  },
+  admin: {
+    email: 'admin@email.com',
+    password: '!@#$%^'
+  }
+};
+
+// User must be created before this method can be invoked
+class LoggedInUser {
+  constructor(user) {
+    this.email = user.email;
+    this.password = user.password;
+    this.req = request(app);
+    this.cookie;
+    this.id;
+  }
+
+  async login() {
+    try {
+      const loggedIn = await this.req
+      .get('/auth/login')
+      .send(this.user)
+    this.cookie = loggedIn.headers['set-cookie'];
+    this.id = loggedIn.body.id;
+    } catch (err) {
+      throw new Error(`Unable to login ${this.user.email}: ${err}`)
+    }
+  }
+}
+
+const authUser = new LoggedInUser(config.user); const authAdmin = new LoggedInUser(config.admin);
+
+before(async () => {
+  db.sync({ force: true });
+
+  const creatingUsers = Object.values(config).map(person => User.create(person));
+
+  await Promise.all(creatingUsers);
+  await Promise.all([
+    authUser.login(),
+    authAdmin.login()
+  ]).then(users => console.log(`Logged in ${users.length} users`));
+});
+
+after(() => db.close());
+
+module.exports = {
+  authUser,
+  authAdmin
+}
