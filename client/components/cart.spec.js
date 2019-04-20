@@ -15,13 +15,13 @@ describe('Components - Cart', () => {
 		id: 1,
 		imageUrl: 'http://www.test.com/url.jpg',
 		name: 'Test Item1',
-		price: 23.99
+		price: 2399
 	};
 	const object2 = {
 		id: 2,
 		imageUrl: 'http://www.test.com/url.jpg',
 		name: 'Test Item2',
-		price: 99.99
+		price: 9999
 	};
 	let arr = [object1, object2];
 
