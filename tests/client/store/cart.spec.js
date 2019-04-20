@@ -7,7 +7,7 @@ import {
 	addingToCartThunk,
 	subtractFromCartThunk,
 	setAddToCart
-} from './cart';
+} from '../../../client/store';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import configureMockStore from 'redux-mock-store';
