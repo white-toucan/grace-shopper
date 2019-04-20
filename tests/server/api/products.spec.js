@@ -15,7 +15,7 @@ describe('GET /products/', () => {
 		beforeEach(() => {
 			return Product.create({
 				name: banana,
-				price: 0.33
+				price: 33
 			});
 		});
 
@@ -40,16 +40,16 @@ describe('GET /products/:id', () => {
 			{
 				name: 'Boring product',
 				description: 'This product is boring',
-				price: 8.88
+				price: 888
 			},
 			{
 				name: 'Cool product',
-				price: 3.67
+				price: 367
 			},
 			{
 				name: 'Riveting Product',
 				description: 'This product is riveting',
-				price: 134567.45
+				price: 13456745
 			}
 		].map(data => Product.create(data));
 
@@ -85,7 +85,7 @@ describe('POST /products', () => {
 			.send({
 				name: 'Awesome POST-Created Product',
 				description: 'Can you believe I did this in a test?',
-				price: 355.9
+				price: 3559
 			})
 			.expect(200);
 
@@ -101,7 +101,7 @@ describe('PUT /products/:id', () => {
 		product = await Product.create({
 			name: 'Final Product',
 			description: 'You can do it!',
-			price: 23232.5
+			price: 232325
 		});
 	});
 
@@ -110,7 +110,7 @@ describe('PUT /products/:id', () => {
 			.put('/api/products/' + product.id)
 			.send({
 				name: 'Awesome PUT-Updated Product',
-				price: 232.9
+				price: 2329
 			})
 			.expect(200);
 
@@ -124,7 +124,7 @@ describe('PUT /products/:id', () => {
 			.put('/api/products/' + product.id)
 			.send({
 				name: 'Awesome PUT-Updated Product',
-				price: 223.23
+				price: 22323
 			});
 
 		const foundProduct = await Product.findByPk(product.id);
@@ -141,7 +141,7 @@ describe('DELETE /products/:id', () => {
 		product = await Product.create({
 			name: 'Deleted Product',
 			description: 'Remove Product!',
-			price: 132.58
+			price: 13258
 		});
 	});
 	it('deletes a product', () => {
