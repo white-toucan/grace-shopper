@@ -52,7 +52,7 @@ async function seed() {
 			897,
 			'/images/products/spot_the_dog_beanie.jpg'
 		),
-		productTemplate('Nintendo 64', 'The best graphics in the industry', 15000, '/images/products/nintendo64.jpeg')
+		productTemplate('Nintendo 64', 'The best graphics in the industry', 15000, '/images/products/nintendo64.jpeg'),
 	].map(data => Product.create(data));
 
 	const products = await Promise.all(creatingProducts);

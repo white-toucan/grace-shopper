@@ -6,6 +6,7 @@ import {
 	emptyCart,
 	addingToCartThunk,
 	deleteFromCartThunk,
+	updateItemQtyThunk,
 	setAddToCart
 } from '../../../client/store';
 import axios from 'axios';
@@ -36,13 +37,13 @@ describe('RX Store - cart - thunk creators', () => {
 			id: 1,
 			imageUrl: 'http://www.test.com/url.jpg',
 			name: 'Test Item1',
-			price: 23.99
+			price: 2399
 		};
 		cartItem2 = {
 			id: 2,
 			imageUrl: 'http://www.test.com/url.jpg',
 			name: 'Test Item2',
-			price: 99.99
+			price: 9999
 		};
 		fakeCartItems = [cartItem1, cartItem2];
 		userId = 2;
@@ -87,15 +88,37 @@ describe('RX Store - cart - thunk creators', () => {
 	});
 
 	describe('deleteFromCartThunk', () => {
-		it('eventually dispatches the SET_SUBTRACT_FROM_CART action', async () => {
+		it('eventually dispatches the SET_EMPTY_CART action', async () => {
 			mockAxios
 				.onDelete(`/api/cartItems/${cartItem2.id}`)
 				.replyOnce(204, cartItem2);
 			await store.dispatch(setAddToCart(cartItem2));
 			await store.dispatch(deleteFromCartThunk(cartItem2));
 			const actions = store.getActions();
-			expect(actions[1].type).to.be.equal('SET_SUBTRACT_FROM_CART');
+			expect(actions[1].type).to.be.equal('SET_REMOVE_FROM_CART');
 			expect(actions[0].product).to.be.deep.equal(cartItem2);
+		});
+	});
+
+	describe('updateItemQtyThunk', () => {
+		it('eventually dispatches the SET_UPDATE_ITEM_QTY action', async () => {
+			const actionProduct = {
+				productId: cartItem2.id,
+				quantity: 3
+			};
+			mockAxios
+				.onPut(`/api/cartItems/${cartItem2.id}`)
+				.replyOnce(200, actionProduct);
+			await store.dispatch(setAddToCart(cartItem2));
+			await store.dispatch(updateItemQtyThunk({
+				id: cartItem2.id,
+				quantity: 3
+			}));
+			const actions = store.getActions();
+
+			// Check dispatched action
+			expect(actions[1].type).to.be.equal('SET_UPDATE_ITEM_QTY');
+			expect(actions[1].product).to.be.deep.equal(actionProduct);
 		});
 	});
 });

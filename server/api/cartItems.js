@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const Cart = require('../db/models/cart');
 const CartItem = require('../db/models/cartItem');
+const Product = require('../db/models/product');
 
 // Get all items in cart
 router.use('/*', (req, res, next) => {
@@ -38,7 +39,11 @@ router.post('/:productId', async (req, res, next) => {
 			where: {
 				cartId, productId
 			},
-			defaults: {cartId, productId, quantity}
+			defaults: {
+				cartId,
+				productId,
+				quantity
+			}
 		});
 
 		if (!created) {
