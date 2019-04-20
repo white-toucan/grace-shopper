@@ -4,36 +4,39 @@ import {expect} from 'chai';
 import React from 'react';
 import enzyme, {shallow} from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import {ProductCard} from './productCard';
+import {CartItem} from '../../../client/components/cartItem';
 
 const adapter = new Adapter();
 enzyme.configure({adapter});
 
-describe('Components - ProductCard', () => {
-	let productCard;
+describe('Components - CartItem', () => {
+	let cartItem;
 	let fakeHistory = [];
 
 	beforeEach(() => {
 		fakeHistory = [];
-		productCard = shallow(
-			<ProductCard
+		cartItem = shallow(
+			<CartItem
 				product={{
-					id: 1,
+					id: 4,
 					imageUrl: 'http://www.test.com/url.jpg',
 					name: 'Test Item',
 					price: 2399
 				}}
+				setSelectedProduct={() => {}}
 				history={fakeHistory}
 			/>
 		);
 	});
 
 	it('renders the product name in an h2 tag', () => {
-		expect(productCard.find('h2').text()).to.be.equal('Test Item');
+		expect(cartItem.find('h2').text()).to.be.equal('Test Item');
 	});
 
 	it('pushes to history when the image is clicked', () => {
-		productCard.find('img').simulate('click');
-		expect(fakeHistory[0]).to.equal('/products/1');
+		cartItem.find('img').simulate('click');
+		expect(fakeHistory[0]).to.equal('/products/4');
 	});
+
+	// note testing on add and remove buttons could be added
 });
