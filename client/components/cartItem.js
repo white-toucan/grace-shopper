@@ -51,9 +51,16 @@ export class CartItem extends Component {
 				<h3>{`$${(product.price / 100).toFixed(2)}`}</h3>
 				<h3>{product.quantity}</h3>
 				<form onSubmit={() => this.onSubmitQtyChangeThunk(product)}>
-					<div>
+					<div className="change-qty">
 						<label htmlFor="quantity">Qty</label>
-						<input name="quantity" min="1" value={this.state.quantity} onChange={(event) => this.onChangeQty(event)}/>
+						<select name="quantity" value={this.state.quantity} onChange={(event) => this.onChangeQty(event)} >
+							{
+								/* Will eventually replace 20 with product inventory */
+								new Array(Math.min(10, 20)).fill(1).map((_, i) =>
+									<option key={i} value={i + 1}>{i + 1}</option>
+								)
+							}
+						</select>
 					</div>
 					<button type="submit">Update</button>
 				</form>

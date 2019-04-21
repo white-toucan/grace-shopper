@@ -37,9 +37,17 @@ export class SingleProduct extends Component {
 					<h3 className="product-info-name">{name}</h3>
 					<p className="product-price">{`$${(price/100).toFixed(2)}`}</p>
 					<p className="product-desc">{description}</p>
-					<div>
+					<div className="change-qty">
 						<label htmlFor="quantity">Qty</label>
-						<input name="quantity" type="number" min="1" value={this.state.quantity} onChange={(event) => this.onChangeQty(event)}/>
+						<select name="quantity" value={this.state.quantity} onChange={(event) => this.onChangeQty(event)} >
+							{
+								/* Will eventually replace 20 with product inventory */
+								new Array(Math.min(10,20)).fill(1).map((_, i) =>
+									<option key={i} value={i + 1}>{i + 1}</option>
+								)
+							}
+						</select>
+						{/* <input name="quantity" type="number" min="1" value={this.state.quantity} onChange={(event) => this.onChangeQty(event)}/> */}
 					</div>
 					<button
 						className="add-to-cart"
