@@ -6,9 +6,10 @@ import axios from 'axios';
  * ACTION TYPES
  */
 const SET_CART = 'SET_CART';
-const SET_REMOVE_CART = 'SET_REMOVE_CART';
 const SET_ADD_TO_CART = 'SET_ADD_TO_CART';
-const SET_SUBTRACT_FROM_CART = 'SET_SUBTRACT_FROM_CART';
+const SET_UPDATE_ITEM_QTY = 'SET_UPDATE_ITEM_QTY';
+const SET_REMOVE_FROM_CART = 'SET_REMOVE_FROM_CART';
+const SET_EMPTY_CART = 'SET_EMPTY_CART';
 /**
  * INITIAL STATE
  */
@@ -19,22 +20,32 @@ const initialState = {
 /**
  * ACTION CREATORS
  */
-const setCart = cartItems => ({type: SET_CART, cartItems});
-export const setAddToCart = product => ({type: SET_ADD_TO_CART, product});
-const setRemoveCart = () => ({type: SET_REMOVE_CART});
-const setSubtractFromCart = product => ({
-	type: SET_SUBTRACT_FROM_CART,
+const setCart = cartItems => ({
+	type: SET_CART,
+	cartItems
+});
+export const setAddToCart = product => ({
+	type: SET_ADD_TO_CART,
 	product
 });
+const setUpdateItemQty = product => ({
+	type: SET_UPDATE_ITEM_QTY,
+	product
+});
+const setRemoveFromCart = product => ({
+	type: SET_REMOVE_FROM_CART,
+	product
+});
+
 /**
  * THUNK CREATORS
  */
-export const getCartThunk = userId => async dispatch => {
+export const getCartThunk = () => async dispatch => {
 	try {
 		const res = await axios.get(`/api/cartItems`); // waiting for routes
-		dispatch(setCart(res.data || initialState));
-	} catch (err) {
-		console.error(err);
+		dispatch(setCart(res.data));
+	} catch (error) {
+		console.error(error);
 	}
 };
 
@@ -51,20 +62,34 @@ export const getCartThunk = userId => async dispatch => {
 export const addingToCartThunk = product => async dispatch => {
 	try {
 		const productId = product.id;
-		await axios.post(`/api/cartItems/${productId}`);
+		const res = await axios.post(`/api/cartItems/${productId}`, {quantity: product.quantity});	//returns cartId, productId, quantity
+
+		product.quantity = res.data.quantity;
 		dispatch(setAddToCart(product));
 	} catch (error) {
-		console.log(error);
+		console.error(error);
 	}
 };
 
-export const subtractFromCartThunk = product => async dispatch => {
+export const updateItemQtyThunk = product => async dispatch => {
+	try {
+		const res = await axios.put(`/api/cartItems/${product.id}`, {
+			quantity: product.quantity
+		});
+		// response contains cartId, productId, quantity
+		return dispatch(setUpdateItemQty(res.data));
+	} catch (error) {
+		console.error(error);
+	}
+}
+
+export const deleteFromCartThunk = product => async dispatch => {
 	try {
 		const productId = product.id;
 		await axios.delete(`/api/cartItems/${productId}`);
-		dispatch(setSubtractFromCart(product));
+		dispatch(setRemoveFromCart(product));
 	} catch (error) {
-		console.log(error);
+		console.error(error);
 	}
 };
 
@@ -74,16 +99,36 @@ export default function(prevState = initialState, action) {
 		case SET_CART:
 			stateCopy.cartItems = action.cartItems;
 			return stateCopy;
-		case SET_REMOVE_CART:
+		case SET_EMPTY_CART:
 			stateCopy.cartItems = [];
 			return stateCopy;
 		case SET_ADD_TO_CART:
-			stateCopy.cartItems = [...stateCopy.cartItems, action.product];
+			// Check if there is already an item in cart with the same name
+			let cartItemsNames = stateCopy.cartItems.map(item => item.name);
+
+			// If an item does not exist, add it to the list
+			if (!cartItemsNames.includes(action.product.name)) {
+				stateCopy.cartItems = [...stateCopy.cartItems, action.product];
+			// Otherwise, update the product details
+			} else {
+				stateCopy.cartItems = stateCopy.cartItems.map(product => (
+					product.name === action.product.name
+					? action.product
+					: product
+				));
+			}
 			return stateCopy;
-		case SET_SUBTRACT_FROM_CART:
+		case SET_REMOVE_FROM_CART:
 			stateCopy.cartItems = stateCopy.cartItems.filter(
 				product => product.id !== action.product.id
 			);
+			return stateCopy;
+		case SET_UPDATE_ITEM_QTY:
+			stateCopy.cartItems = stateCopy.cartItems.map(product => (
+				product.id === action.product.productId
+				? {...product, quantity: action.product.quantity}
+				: product
+			));
 			return stateCopy;
 		default:
 			return prevState;

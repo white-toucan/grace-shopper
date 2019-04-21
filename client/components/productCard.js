@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {setSelectedProduct} from '../store';
 import {connect} from 'react-redux';
+import {defaultImageUrl} from './util/constants';
 
 export class ProductCard extends Component {
 	constructor(props) {
@@ -17,13 +18,13 @@ export class ProductCard extends Component {
 		return (
 			<div className="product">
 				<img
-					src={imageUrl ? imageUrl:'./images/products/No-Image-Available.jpg'}
+					src={imageUrl || defaultImageUrl}
 					height="200"
 					width="200"
 					onClick={() => this.moveToProduct(id)}
 				/>
 				<h2>{name}</h2>
-				<h3>{`$${price/100}`}</h3>
+				<h3>{`$${(price/100).toFixed(2)}`}</h3>
 			</div>
 		);
 	}

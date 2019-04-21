@@ -15,7 +15,7 @@ export class Cart extends Component {
 			<div className="cart">
 				<h1> CART </h1>
 				{cart &&
-					cart.map(product => <CartItem product={product} key={product.id} />)}
+					cart.map(product => <CartItem product={product} history ={this.props.history} key={product.id} />)}
 			</div>
 		);
 	}

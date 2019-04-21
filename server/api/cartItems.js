@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const Cart = require('../db/models/cart');
 const CartItem = require('../db/models/cartItem');
+const Product = require('../db/models/product');
 
 // Get all items in cart
 router.use('/*', (req, res, next) => {
@@ -15,8 +16,14 @@ router.get('/', async (req, res, next) => {
 		let products = await Cart.findByPk(cartId)
 			.then(cart => cart.getProducts());
 
-		if (products) res.json(products);
-		else res.sendStatus(404);
+		let productsRes = products.map(({id, name, price, imageUrl, cartItem}) => ({
+			id,
+			name,
+			price,
+			imageUrl,
+			quantity: cartItem.quantity
+		}))
+		res.json(productsRes || []);
 	} catch (error) {
 		next(error);
 	}
@@ -28,8 +35,21 @@ router.post('/:productId', async (req, res, next) => {
 	const productId = +req.params.productId;
 	const quantity = req.body.quantity ? +req.body.quantity : 1;
 	try {
-		await CartItem.create({cartId, productId, quantity});
-		res.sendStatus(200);
+		let [cartItem, created] = await CartItem.findOrCreate({
+			where: {
+				cartId, productId
+			},
+			defaults: {
+				cartId,
+				productId,
+				quantity
+			}
+		});
+
+		if (!created) {
+			cartItem.update({quantity: cartItem.quantity + quantity});
+		}
+		res.json(cartItem);
 	} catch (error) {
 		next(error);
 	}
