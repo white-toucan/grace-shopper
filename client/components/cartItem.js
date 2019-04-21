@@ -49,7 +49,6 @@ export class CartItem extends Component {
 				/>
 				<h2>{product.name}</h2>
 				<h3>{`$${(product.price / 100).toFixed(2)}`}</h3>
-				<h3>{product.quantity}</h3>
 				<form onSubmit={() => this.onSubmitQtyChangeThunk(product)}>
 					<div className="change-qty">
 						<label htmlFor="quantity">Qty</label>
