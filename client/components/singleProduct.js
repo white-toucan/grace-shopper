@@ -4,12 +4,26 @@ import {getProductByIdThunk, addingToCartThunk} from '../store';
 import {defaultImageUrl} from './util/constants';
 
 export class SingleProduct extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			quantity: 1
+		};
+	}
+
 	componentDidMount() {
 		this.props.getProduct(this.props.match.params.productId);
 	}
 
 	addingToCartThunk(product) {
-		this.props.addingToCartThunk(product);
+		const modifiedProd = {...product, quantity: this.state.quantity};
+		this.props.addingToCartThunk(modifiedProd);
+	}
+
+	onChangeQty(event) {
+		this.setState({
+			quantity: event.target.value
+		});
 	}
 
 	render() {
@@ -23,6 +37,10 @@ export class SingleProduct extends Component {
 					<h3 className="product-info-name">{name}</h3>
 					<p className="product-price">{`$${(price/100).toFixed(2)}`}</p>
 					<p className="product-desc">{description}</p>
+					<div>
+						<label>Qty</label>
+						<input type="number" min="1" value={this.state.quantity} onChange={(event) => this.onChangeQty(event)}/>
+					</div>
 					<button
 						className="add-to-cart"
 						type="button"

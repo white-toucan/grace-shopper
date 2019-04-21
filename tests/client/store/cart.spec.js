@@ -56,7 +56,6 @@ describe('RX Store - cart - thunk creators', () => {
 
 	describe('getCartThunk', () => {
 		it('eventually dispatches the SET_CART action', async () => {
-			//TODO: mock axios call nees to be aligned with the real final route, (delete userId var if not needed)
 			mockAxios.onGet(`/api/cartItems`).replyOnce(200, fakeCartItems);
 			await store.dispatch(getCartThunk());
 			const actions = store.getActions();
@@ -106,6 +105,7 @@ describe('RX Store - cart - thunk creators', () => {
 				productId: cartItem2.id,
 				quantity: 3
 			};
+
 			mockAxios
 				.onPut(`/api/cartItems/${cartItem2.id}`)
 				.replyOnce(200, actionProduct);
@@ -114,8 +114,8 @@ describe('RX Store - cart - thunk creators', () => {
 				id: cartItem2.id,
 				quantity: 3
 			}));
-			const actions = store.getActions();
 
+			const actions = store.getActions();
 			// Check dispatched action
 			expect(actions[1].type).to.be.equal('SET_UPDATE_ITEM_QTY');
 			expect(actions[1].product).to.be.deep.equal(actionProduct);
