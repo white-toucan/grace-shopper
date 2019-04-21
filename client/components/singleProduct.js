@@ -22,7 +22,7 @@ export class SingleProduct extends Component {
 
 	onChangeQty(event) {
 		this.setState({
-			quantity: event.target.value
+			quantity: +event.target.value
 		});
 	}
 
@@ -38,8 +38,8 @@ export class SingleProduct extends Component {
 					<p className="product-price">{`$${(price/100).toFixed(2)}`}</p>
 					<p className="product-desc">{description}</p>
 					<div>
-						<label>Qty</label>
-						<input type="number" min="1" value={this.state.quantity} onChange={(event) => this.onChangeQty(event)}/>
+						<label htmlFor="quantity">Qty</label>
+						<input name="quantity" type="number" min="1" value={this.state.quantity} onChange={(event) => this.onChangeQty(event)}/>
 					</div>
 					<button
 						className="add-to-cart"

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {
 	setSelectedProduct,
-	addingToCartThunk,
+	updateItemQtyThunk,
 	deleteFromCartThunk
 } from '../store/index';
 import {connect} from 'react-redux';
@@ -9,21 +9,31 @@ import {connect} from 'react-redux';
 export class CartItem extends Component {
 	constructor(props) {
 		super(props);
+		this.state = {
+			quantity: this.props.product.quantity
+		}
 		this.onClickMoveToProduct = this.onClickMoveToProduct.bind(this);
 	}
 
 	onClickMoveToProduct(product) {
 		this.props.setSelectedProduct(product);
-		// TODO: correct the front end route name
 		this.props.history.push(`/products/${product.id}`);
 	}
 
-	onClickAddToCart(product) {
-		this.props.addingToCartThunk(product);
+	onClickDeleteFromCartThunk(product) {
+		this.props.deleteFromCartThunk(product);
 	}
 
-	onClickdeleteFromCartThunk(product) {
-		this.props.deleteFromCartThunk(product);
+	onChangeQty(event) {
+		this.setState({
+			quantity: +event.target.value
+		});
+	}
+
+	onSubmitQtyChangeThunk(product) {
+		event.preventDefault();
+		const modifiedProd = {...product, quantity: this.state.quantity};
+		this.props.updateItemQtyThunk(modifiedProd);
 	}
 
 	render() {
@@ -38,40 +48,36 @@ export class CartItem extends Component {
 					onClick={() => this.onClickMoveToProduct(product)}
 				/>
 				<h2>{product.name}</h2>
-				<h3>{`$${(product.price/100).toFixed(2)}`}</h3>
+				<h3>{`$${(product.price / 100).toFixed(2)}`}</h3>
 				<h3>{product.quantity}</h3>
+				<form onSubmit={() => this.onSubmitQtyChangeThunk(product)}>
+					<div>
+						<label htmlFor="quantity">Qty</label>
+						<input name="quantity" min="1" value={this.state.quantity} onChange={(event) => this.onChangeQty(event)}/>
+					</div>
+					<button type="submit">Update</button>
+				</form>
 				<button
-					onClick={() => this.onClickdeleteFromCartThunk(product)}
+					onClick={() => this.onClickDeleteFromCartThunk(product)}
 					type="button"
 				>
-					{' '}
-					X{' '}
-				</button>
-				<button onClick={() => this.onClickAddToCart(product)} type="button">
-					{' '}
-					Add{' '}
+					Remove
 				</button>
 			</div>
 		);
 	}
 }
 
-// const mapStateToProps = state => {
-// return{
-//     setSelectedProduct: state.product.setSelectedProduct
-// }
-// }
-
 const mapDispatchToProps = dispatch => {
 	return {
 		setSelectedProduct: function(product) {
 			dispatch(setSelectedProduct(product));
 		},
-		addingToCartThunk: function(product) {
-			dispatch(addingToCartThunk(product));
-		},
 		deleteFromCartThunk: function(product) {
 			dispatch(deleteFromCartThunk(product));
+		},
+		updateItemQtyThunk: function(product) {
+			dispatch(updateItemQtyThunk(product));
 		}
 	};
 };
