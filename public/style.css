@@ -1,9 +1,14 @@
 body {
-  font-family: sans-serif;
+  font-family: 'Oswald', sans-serif;;
 }
 
 a {
   text-decoration: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Amatic SC', cursive;
+  margin: 0;
 }
 
 label {
@@ -18,4 +23,15 @@ nav a {
 form div {
   margin: 1em;
   display: inline-block;
+}
+
+.flex-between {
+  display: flex;
+  align-items: center;
+}
+
+#navbar {
+  background-color: rgba(87,194,199);
+  color: rgba(240, 240, 240);
+
 }
