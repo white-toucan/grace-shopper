@@ -1,5 +1,8 @@
 body {
-  font-family: 'Oswald', sans-serif;;
+  font-family: 'Oswald', sans-serif;
+  box-sizing: border-box;
+  background-image: url("./images/background2.jpg");
+  background-repeat: repeat;
 }
 
 a {
@@ -7,8 +10,11 @@ a {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Amatic SC', cursive;
   margin: 0;
+}
+
+h1, h2, #nav-header {
+  font-family: 'Amatic SC', cursive;
 }
 
 label {
@@ -30,8 +36,29 @@ form div {
   align-items: center;
 }
 
+.product.ui.card {
+  border-radius: 0;
+  padding: 1%;
+  background-color: rgb(255, 255, 255);;
+}
+
+/* .ui.card>.image {
+  margin: 5%;
+} */
+
+#container {
+  padding: 2%;
+}
+
 #navbar {
   background-color: rgba(87,194,199);
   color: rgba(240, 240, 240);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
+#nav-header {
+  font-size: 3rem;
+  margin: 2%;
 }

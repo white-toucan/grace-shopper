@@ -13,10 +13,11 @@ export class AllProducts extends Component {
 
 		return (
 			<div className="allProducts">
-				<h1>All Products Container</h1>
-				{allProductsList && allProductsList.map(product => (
-					<ProductCard history={this.props.history} product={product} key={product.id} />
-				))}
+				<div className="ui five cards">
+					{allProductsList && allProductsList.map(product => (
+						<ProductCard history={this.props.history} product={product} key={product.id} />
+					))}
+				</div>
 			</div>
 		);
 	}

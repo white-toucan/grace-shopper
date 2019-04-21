@@ -16,11 +16,12 @@ export class ProductCard extends Component {
 	render() {
 		let {imageUrl, name, price, id} = this.props.product;
 		return (
-			<div className="product">
+			<div className="product ui card">
 				<img
 					src={imageUrl || defaultImageUrl}
-					height="200"
-					width="200"
+					// height="200"
+					// width="200"
+					className="ui image"
 					onClick={() => this.moveToProduct(id)}
 				/>
 				<h2>{name}</h2>
