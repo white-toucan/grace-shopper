@@ -4,10 +4,10 @@ const CartItem = require('../db/models/cartItem');
 const Product = require('../db/models/product');
 
 // Get all items in cart
-router.use('/*', (req, res, next) => {
-	if (!req.user) return res.sendStatus(404);
-	next();
-})
+// router.use('/*', (req, res, next) => {
+// 	if (!req.user) return res.sendStatus(404);
+// 	next();
+// })
 
 router.get('/', async (req, res, next) => {
 	const {cartId} = req.session;
@@ -32,6 +32,7 @@ router.get('/', async (req, res, next) => {
 // Add item to cart
 router.post('/:productId', async (req, res, next) => {
 	const {cartId} = req.session;
+	console.log(cartId, 'hjdgfhsdkfhks')
 	const productId = +req.params.productId;
 	const quantity = req.body.quantity ? +req.body.quantity : 1;
 	try {
