@@ -3,15 +3,8 @@ const Cart = require('../db/models/cart');
 const CartItem = require('../db/models/cartItem');
 const Product = require('../db/models/product');
 
-// Get all items in cart
-router.use('/*', (req, res, next) => {
-	if (!req.user) return res.sendStatus(404);
-	next();
-});
-
 router.get('/', async (req, res, next) => {
 	const {cartId} = req.session;
-
 	try {
 		let products = await Cart.findByPk(cartId).then(cart => cart.getProducts());
 
@@ -45,7 +38,6 @@ router.post('/:productId', async (req, res, next) => {
 				quantity
 			}
 		});
-
 		if (!created) {
 			cartItem.update({quantity: cartItem.quantity + quantity});
 		}

@@ -19,8 +19,8 @@ describe('Me routes', () => {
 			expect(myCart.body.id).to.be.a('number');
 		});
 
-		it('should return 404 for unauthenticated users', () => {
-			return authUser.req.get('/api/me/cart').expect(404);
+		it('should return 200 for unauthenticated users', () => {
+			return authUser.req.get('/api/me/cart').expect(200);
 		});
 	});
 });

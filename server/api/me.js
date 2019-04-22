@@ -6,17 +6,18 @@ const Product = require('../db/models/product');
 module.exports = router;
 
 router.get('/cart', async (req, res, next) => {
+	let cart;
 	try {
 		if (req.user) {
 			const userId = req.user.id;
-			let [cart] = await Cart.findOrCreate({where: {userId, isActive: true}});
 			// Update cart in session with information about latest active cart
-			req.session.cartId = cart.id;
-			res.json(cart);
-			// TODO: guest path
+			[cart] = await Cart.findOrCreate({where: {userId, isActive: true}});
 		} else {
-			res.sendStatus(404);
+			const sessionId = req.sessionID;
+			[cart] = await Cart.findOrCreate({where: {sessionId, isActive: true}});
 		}
+		req.session.cartId = cart.id;
+		res.json(cart);
 	} catch (error) {
 		next(error);
 	}
@@ -25,8 +26,6 @@ router.get('/cart', async (req, res, next) => {
 // Checkout cart
 router.put('/cart', async (req, res, next) => {
 	try {
-		const userId = req.user.id;
-
 		let paymentConfirmed = true;
 		if (paymentConfirmed) {
 			const cartId = req.session.cartId;
@@ -52,7 +51,9 @@ router.put('/cart', async (req, res, next) => {
 			);
 
 			// Create new cart
-			let newCart = await Cart.create({userId});
+			let newCart = req.user
+				? await Cart.create({userId: req.user.id})
+				: await Cart.create({sessionId: req.sessionID});
 			req.session.cartId = newCart.id; // Set new cartId on session
 			res.json(newCart);
 		}
