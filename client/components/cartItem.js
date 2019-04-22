@@ -1,36 +1,46 @@
 import React, {Component} from 'react';
 import {
 	setSelectedProduct,
-	addingToCartThunk,
-	subtractFromCartThunk
+	updateItemQtyThunk,
+	deleteFromCartThunk
 } from '../store/index';
 import {connect} from 'react-redux';
 
 export class CartItem extends Component {
 	constructor(props) {
 		super(props);
+		this.state = {
+			quantity: this.props.product.quantity
+		}
 		this.onClickMoveToProduct = this.onClickMoveToProduct.bind(this);
 	}
 
 	onClickMoveToProduct(product) {
 		this.props.setSelectedProduct(product);
-		// TODO: correct the front end route name
 		this.props.history.push(`/products/${product.id}`);
 	}
 
-	onClickAddToCart(product) {
-		this.props.addingToCartThunk(product);
+	onClickDeleteFromCartThunk(product) {
+		this.props.deleteFromCartThunk(product);
 	}
 
-	onClicksubtractFromCartThunk(product) {
-		this.props.subtractFromCartThunk(product);
+	onChangeQty(event) {
+		this.setState({
+			quantity: +event.target.value
+		});
+	}
+
+	onSubmitQtyChangeThunk(product) {
+		event.preventDefault();
+		const modifiedProd = {...product, quantity: this.state.quantity};
+		this.props.updateItemQtyThunk(modifiedProd);
 	}
 
 	render() {
 		let {product} = this.props;
 
 		return (
-			<div className="cartItem" key={product.id}>
+			<div className="cartItem">
 				<img
 					src={product.imageUrl}
 					height="200"
@@ -38,40 +48,42 @@ export class CartItem extends Component {
 					onClick={() => this.onClickMoveToProduct(product)}
 				/>
 				<h2>{product.name}</h2>
-				<h3>{product.price}</h3>
-				{/* <h3>{product.cartItems.quantity}</h3> */}
+				<h3>{`$${(product.price / 100).toFixed(2)}`}</h3>
+				<form onSubmit={() => this.onSubmitQtyChangeThunk(product)}>
+					<div className="change-qty">
+						<label htmlFor="quantity">Qty</label>
+						<select name="quantity" value={this.state.quantity} onChange={(event) => this.onChangeQty(event)} >
+							{
+								/* Will eventually replace 20 with product inventory */
+								new Array(Math.min(10, 20)).fill(1).map((_, i) =>
+									<option key={i} value={i + 1}>{i + 1}</option>
+								)
+							}
+						</select>
+					</div>
+					<button type="submit">Update</button>
+				</form>
 				<button
-					onClick={() => this.onClicksubtractFromCartThunk(product)}
+					onClick={() => this.onClickDeleteFromCartThunk(product)}
 					type="button"
 				>
-					{' '}
-					X{' '}
-				</button>
-				<button onClick={() => this.onClickAddToCart(product)} type="button">
-					{' '}
-					Add{' '}
+					Remove
 				</button>
 			</div>
 		);
 	}
 }
 
-// const mapStateToProps = state => {
-// return{
-//     setSelectedProduct: state.product.setSelectedProduct
-// }
-// }
-
 const mapDispatchToProps = dispatch => {
 	return {
 		setSelectedProduct: function(product) {
 			dispatch(setSelectedProduct(product));
 		},
-		addingToCartThunk: function(product) {
-			dispatch(addingToCartThunk(product));
+		deleteFromCartThunk: function(product) {
+			dispatch(deleteFromCartThunk(product));
 		},
-		subtractFromCartThunk: function(product) {
-			dispatch(subtractFromCartThunk(product));
+		updateItemQtyThunk: function(product) {
+			dispatch(updateItemQtyThunk(product));
 		}
 	};
 };

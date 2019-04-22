@@ -1,7 +1,17 @@
-import React, {Component} from 'react';
-import {getCartThunk} from '../store/index';
+import React, {Component, Fragment} from 'react';
+import {getCartThunk, checkoutCartThunk} from '../store/index';
 import {connect} from 'react-redux';
 import CartItem from './cartItem';
+
+const formatCentsToDollars = (price) => `$${(price / 100).toFixed(2)}`;
+
+const totaler = (listOfProducts) => {
+	let price = listOfProducts.reduce((a, b) => {
+		return a + (b.price * b.quantity);
+	}, 0);
+	return formatCentsToDollars(price);
+};
+
 
 export class Cart extends Component {
 	componentDidMount() {
@@ -9,13 +19,34 @@ export class Cart extends Component {
 	}
 
 	render() {
-		const {cart} = this.props;
+		const {cart, checkout} = this.props;
 
 		return (
 			<div className="cart">
-				<h1> CART </h1>
-				{cart &&
-					cart.map(product => <CartItem product={product} key={product.id} />)}
+				{cart && cart.length > 0 ?
+				<Fragment>
+					<h1> CART </h1>
+					{cart.map(product =>
+						<CartItem
+							product={product}
+							history ={this.props.history}
+							key={product.id} />
+					)}
+					<div className="cart-checkout">
+						<h3 className="cart-total">Total: {totaler(cart)}</h3>
+						<button
+							type="button"
+							onClick={checkout}
+							className="btn-cart-checkout">
+							Submit Order
+						</button>
+					</div>
+				</Fragment>
+				:
+				<Fragment>
+					<h1>Cart is Empty :(</h1>
+					<h3>Add some stuff to your cart!</h3>
+				</Fragment>}
 			</div>
 		);
 	}
@@ -31,6 +62,9 @@ const mapDispatchToProps = dispatch => {
 	return {
 		getCartThunk: function() {
 			dispatch(getCartThunk());
+		},
+		checkout: function() {
+			dispatch(checkoutCartThunk());
 		}
 	};
 };

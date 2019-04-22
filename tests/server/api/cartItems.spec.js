@@ -53,12 +53,25 @@ describe('Cart routes', () => {
 	});
 
 	describe('POST api/cartItems/:productId', () => {
-		it('successfully adds to cart', () => {
-			return authUser.req
+		it('successfully adds to cart', async () => {
+			const res = await authUser.req
 				.post('/api/cartItems/4')
 				.set('cookie', authUser.cookie)
 				.expect(200);
+
+			expect(res.body.quantity).to.equal(1);
 		});
+
+		it ('successfully adds to cart twice', async () => {
+			//uses item seeded into cart
+			let res = await authUser.req
+				.post('/api/cartItems/1')
+				.send({quantity: 2})
+				.set('cookie', authUser.cookie)
+				.expect(200);
+
+			expect(res.body.quantity).to.equal(3);
+		})
 	});
 
 	describe('PUT api/cartItems/:productId', () => {
@@ -68,6 +81,7 @@ describe('Cart routes', () => {
 				.send({quantity: 2})
 				.set('cookie', authUser.cookie)
 				.expect(200);
+
 			expect(res.body.quantity).to.equal(2);
 		});
 	});

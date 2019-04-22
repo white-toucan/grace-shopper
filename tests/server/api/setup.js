@@ -43,7 +43,8 @@ class LoggedInUser {
   }
 }
 
-const authUser = new LoggedInUser(config.user); const authAdmin = new LoggedInUser(config.admin);
+const authUser = new LoggedInUser(config.user);
+const authAdmin = new LoggedInUser(config.admin);
 
 before(async () => {
   await db.sync({force: true});
