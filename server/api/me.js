@@ -71,6 +71,7 @@ router.get('/orders', async (req, res, next) => {
 				attributes: ['id'],
 				where: {userId, isActive: false}
 			});
+
 			res.json(cartIdArray);
 		} else {
 			res.sendStatus(404);
@@ -87,12 +88,29 @@ router.get('/orders/:cartId', async (req, res, next) => {
 		if (req.user) {
 			const userId = req.user.id;
 
-			let cartItems = await Cart.findAll({
+			let cart = await Cart.findOne({
 				include: [{model: Product}],
 				where: {id: cartId}
 			});
 
-			res.json({cartItems});
+			let productsFlat = cart.products.map(product => {
+				return {
+					productId: product.id,
+					productName: product.name,
+					imageUrl: product.imageUrl,
+					quantity: product.cartItem.quantity,
+					purchasePrice: product.cartItem.purchasePrice
+				};
+			});
+
+			let response = {
+				id: cart.id,
+				updatedAt: cart.updatedAt
+			};
+
+			response.products = productsFlat;
+
+			res.json(response);
 		} else {
 			res.sendStatus(404);
 		}
