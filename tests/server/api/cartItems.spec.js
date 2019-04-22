@@ -1,19 +1,22 @@
 const { expect } = require('chai');
-const request = require('supertest');
 const db = require('../../../server/db');
-const app = require('../../../server');
 const Cart = db.model('cart');
 const CartItem = db.model('cartItem');
-const User = db.model('user');
 const Product = db.model('product');
+const {authUser} = require('./setup')
 
 describe('Cart routes', () => {
-	let authUser = request(app);
-	let cookie;
 
 	before(async () => {
-		await db.sync({force: true});
+		// Reset all relevant tables and log in;
+		await Promise.all([
+			Cart.sync({force: true}),
+			Product.sync({force: true}),
+			authUser.login()
+		]);
+		await CartItem.sync({force: true});
 
+		// Seed products and cart
 		let products = [
 			{name: 'Thing 1', price: 111},
 			{name: 'Thing 2', price: 222},
@@ -21,43 +24,28 @@ describe('Cart routes', () => {
 			{name: 'Thing 4', price: 444}
 		];
 
-		const user = {
-			email: 'cody@email.com',
-			password: '123456'
-		}
-
-		let [createdUser] = await Promise.all([
-			User.create(user),
+		let [createdCart] = await Promise.all([
+			Cart.create({userId: authUser.id}),
 			Product.bulkCreate(products),
 		]);
-		let createdCart = await Cart.create({userId: createdUser.id});
+
 		await CartItem.bulkCreate([
 			{cartId: createdCart.id, productId: 1},
 			{cartId: createdCart.id, productId: 2},
 			{cartId: createdCart.id, productId: 3}
 		]);
 
-		let loggedIn = await authUser
-      .post('/auth/login')
-			.send(user)
-
-		cookie = loggedIn.headers['set-cookie'];
-
-		await authUser
+		// Create user's cart
+		await authUser.req
 			.get('/api/me/cart')
-			.set('cookie', cookie)
+			.set('cookie', authUser.cookie)
 	});
 
-	// after(async () => {
-	// 	await db.close();
-	// });
-
 	describe('GET /api/cartItems', () => {
-
 		it('returns all products in cart', async () => {
-			const res = await authUser
+			const res = await authUser.req
 				.get('/api/cartItems')
-				.set('cookie', cookie)
+				.set('cookie', authUser.cookie)
 				.expect(200);
 			expect(res.body).to.be.an('array');
 			expect(res.body.length).to.equal(3);
@@ -65,11 +53,10 @@ describe('Cart routes', () => {
 	});
 
 	describe('POST api/cartItems/:productId', () => {
-
-		it('successfully adds to cart', async() => {
-			const res = await authUser
+		it('successfully adds to cart', async () => {
+			const res = await authUser.req
 				.post('/api/cartItems/4')
-				.set('cookie', cookie)
+				.set('cookie', authUser.cookie)
 				.expect(200);
 
 			expect(res.body.quantity).to.equal(1);
@@ -77,10 +64,10 @@ describe('Cart routes', () => {
 
 		it ('successfully adds to cart twice', async () => {
 			//uses item seeded into cart
-			let res = await authUser
+			let res = await authUser.req
 				.post('/api/cartItems/1')
 				.send({quantity: 2})
-				.set('cookie', cookie)
+				.set('cookie', authUser.cookie)
 				.expect(200);
 
 			expect(res.body.quantity).to.equal(3);
@@ -89,10 +76,10 @@ describe('Cart routes', () => {
 
 	describe('PUT api/cartItems/:productId', () => {
 		it('successfully updates cart item quantity', async () => {
-			const res = await authUser
+			const res = await authUser.req
 				.put('/api/cartItems/2')
 				.send({quantity: 2})
-				.set('cookie', cookie)
+				.set('cookie', authUser.cookie)
 				.expect(200);
 
 			expect(res.body.quantity).to.equal(2);
@@ -101,9 +88,9 @@ describe('Cart routes', () => {
 
 	describe('DELETE api/cartItems/:productId', () => {
 		it('successfully deletes item from cart', () => {
-			return authUser
+			return authUser.req
 				.delete('/api/cartItems/2')
-				.set('cookie', cookie)
+				.set('cookie', authUser.cookie)
 				.expect(204);
 		});
 	});

@@ -6,7 +6,7 @@ const Product = db.model('product');
 
 describe('GET /products/', () => {
 	beforeEach(() => {
-		return db.sync({force: true});
+		return Product.sync({force: true});
 	});
 
 	describe('/api/products/', () => {
@@ -34,7 +34,6 @@ describe('GET /products/:id', () => {
 	let oneProduct;
 
 	beforeEach(async () => {
-		// await db.sync({force: true});
 
 		const creatingProducts = [
 			{

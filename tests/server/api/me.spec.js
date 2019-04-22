@@ -1,38 +1,26 @@
 const {expect} = require('chai');
-const request = require('supertest');
 const db = require('../../../server/db');
-const app = require('../../../server');
-const User = db.model('user');
+const Cart = db.model('cart');
+const {authUser} = require('./setup');
 
 describe('Me routes', () => {
-	let authUser = request(app);
-	let cookie;
 
 	before(async () => {
-		await db.sync({force: true});
-		const user = {
-			email: 'cody@email.com',
-			password: '12345'
-		};
-
-		await User.create(user);
-
-		let loggedIn = await authUser.post('/auth/login').send(user);
-
-		cookie = loggedIn.headers['set-cookie'];
+    await Cart.sync({force: true});
+    await authUser.login();
 	});
 
 	describe('GET /me/cart', () => {
 		it('should return a cart for a logged in user', async () => {
-			let myCart = await authUser
+			let myCart = await authUser.req
 				.get('/api/me/cart')
-				.set('cookie', cookie)
+				.set('cookie', authUser.cookie)
 				.expect(200);
 			expect(myCart.body.id).to.be.a('number');
 		});
 
 		it('should return 404 for unauthenticated users', () => {
-			return authUser.get('/api/me/cart').expect(404);
+			return authUser.req.get('/api/me/cart').expect(404);
 		});
 	});
 });
