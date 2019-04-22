@@ -37,13 +37,14 @@ const setRemoveFromCart = product => ({
 	type: SET_REMOVE_FROM_CART,
 	product
 });
-const checkoutCart = () => ({
+export const checkoutCart = () => ({
 	type: CHECKOUT_CART
 });
 
 /**
  * THUNK CREATORS
  */
+
 export const getCartThunk = () => async dispatch => {
 	try {
 		const res = await axios.get(`/api/cartItems`); // waiting for routes
@@ -67,7 +68,9 @@ export const checkoutCartThunk = () => async dispatch => {
 export const addingToCartThunk = product => async dispatch => {
 	try {
 		const productId = product.id;
-		const res = await axios.post(`/api/cartItems/${productId}`, {quantity: product.quantity});	//returns cartId, productId, quantity
+		const res = await axios.post(`/api/cartItems/${productId}`, {
+			quantity: product.quantity
+		}); //returns cartId, productId, quantity
 
 		product.quantity = res.data.quantity;
 		dispatch(setAddToCart(product));
@@ -86,7 +89,7 @@ export const updateItemQtyThunk = product => async dispatch => {
 	} catch (error) {
 		console.error(error);
 	}
-}
+};
 
 export const deleteFromCartThunk = product => async dispatch => {
 	try {
@@ -114,13 +117,12 @@ export default function(prevState = initialState, action) {
 			// If an item does not exist, add it to the list
 			if (!cartItemsNames.includes(action.product.name)) {
 				stateCopy.cartItems = [...stateCopy.cartItems, action.product];
-			// Otherwise, update the product details
+				// Otherwise, update the product details
 			} else {
-				stateCopy.cartItems = stateCopy.cartItems.map(product => (
-					product.name === action.product.name
-					? action.product
-					: product
-				));
+				stateCopy.cartItems = stateCopy.cartItems.map(
+					product =>
+						product.name === action.product.name ? action.product : product
+				);
 			}
 			return stateCopy;
 		case SET_REMOVE_FROM_CART:
@@ -129,11 +131,12 @@ export default function(prevState = initialState, action) {
 			);
 			return stateCopy;
 		case SET_UPDATE_ITEM_QTY:
-			stateCopy.cartItems = stateCopy.cartItems.map(product => (
-				product.id === action.product.productId
-				? {...product, quantity: action.product.quantity}
-				: product
-			));
+			stateCopy.cartItems = stateCopy.cartItems.map(
+				product =>
+					product.id === action.product.productId
+						? {...product, quantity: action.product.quantity}
+						: product
+			);
 			return stateCopy;
 		default:
 			return prevState;
