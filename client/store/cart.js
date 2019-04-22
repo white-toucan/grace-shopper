@@ -9,7 +9,8 @@ const SET_CART = 'SET_CART';
 const SET_ADD_TO_CART = 'SET_ADD_TO_CART';
 const SET_UPDATE_ITEM_QTY = 'SET_UPDATE_ITEM_QTY';
 const SET_REMOVE_FROM_CART = 'SET_REMOVE_FROM_CART';
-const SET_EMPTY_CART = 'SET_EMPTY_CART';
+const CHECKOUT_CART = 'CHECKOUT_CART';
+
 /**
  * INITIAL STATE
  */
@@ -36,6 +37,9 @@ const setRemoveFromCart = product => ({
 	type: SET_REMOVE_FROM_CART,
 	product
 });
+const checkoutCart = () => ({
+	type: CHECKOUT_CART
+});
 
 /**
  * THUNK CREATORS
@@ -49,15 +53,16 @@ export const getCartThunk = () => async dispatch => {
 	}
 };
 
-// export const emptyCart = (userId) => async dispatch => {
-// 	try {
-// 		//TODO: update with the right route
-// 		await axios.delete(`api/carts/${userId}/active`); // waiting for routes
-// 		dispatch(setRemoveCart());
-// 	} catch (error) {
-// 		console.log(error);
-// 	}
-// };
+export const checkoutCartThunk = () => async dispatch => {
+	try {
+		// API call to record purchasePrice for cartItems, archive current
+		// active cart, and create new cart
+		const res = await axios.put(`/api/me/cart`); // TODO: needs route functionality
+		dispatch(checkoutCart());
+	} catch (error) {
+		console.error(error);
+	}
+};
 
 export const addingToCartThunk = product => async dispatch => {
 	try {
@@ -99,7 +104,7 @@ export default function(prevState = initialState, action) {
 		case SET_CART:
 			stateCopy.cartItems = action.cartItems;
 			return stateCopy;
-		case SET_EMPTY_CART:
+		case CHECKOUT_CART:
 			stateCopy.cartItems = [];
 			return stateCopy;
 		case SET_ADD_TO_CART:
