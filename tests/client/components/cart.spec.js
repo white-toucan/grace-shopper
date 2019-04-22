@@ -29,7 +29,7 @@ describe('Components - Cart', () => {
 		cartItems = shallow(<Cart cart={arr} getCartThunk={() => {}} />);
 	});
 
-	it('renders a map of all cart items  length plus one h1', () => {
-		expect(cartItems.find('.cart').children()).to.have.lengthOf(1 + arr.length);
+	it('renders a map of all cart items length plus one h1 and one button', () => {
+		expect(cartItems.find('.cart').children()).to.have.lengthOf(arr.length + 1 + 1);
 	});
 });
