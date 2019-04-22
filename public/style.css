@@ -1,21 +1,37 @@
-body {
+@font-face {
+  font-family: 'Vintage Warehouse';
+  src: url('./fonts/Vintage\ Warehouse.ttf')
+}
+
+@font-face {
+  font-family: 'Neon Absolute';
+  src: url('./fonts/NEON\ ABSOLUTE\ SANS1.ttf');
+}
+
+body, .ui.header .sub.header {
   font-family: 'Oswald', sans-serif;
   box-sizing: border-box;
-  background-image: url("./images/background2.jpg");
-  background-repeat: repeat;
+}
+
+body {
+  background-color: rgb(255, 254, 249);
 }
 
 a {
   text-decoration: none;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6, .ui.card>:last-child, .ui.cards>.card>:last-child {
   margin: 0;
 }
 
-h1, h2, #nav-header {
-  font-family: 'Amatic SC', cursive;
+h1, .ui.card>:last-child, .ui.cards>.card>:last-child, #nav-header {
+  /* font-family: 'Amatic SC', cursive; */
+  font-family: 'Neon Absolute';
+  /* font-family: 'Vintage Warehouse'; */
 }
+
+.ui.card>:last-child, .ui.cards>.card>:last-child
 
 label {
   display: block;
@@ -31,6 +47,10 @@ form div {
   display: inline-block;
 }
 
+.allProducts {
+  margin: 2%;
+}
+
 .flex-between {
   display: flex;
   align-items: center;
@@ -39,26 +59,62 @@ form div {
 .product.ui.card {
   border-radius: 0;
   padding: 1%;
-  background-color: rgb(255, 255, 255);;
+  /* background-color: rgb(255, 252, 234); */
+  box-shadow: 1px 1px 5px rgb(221, 221, 221);
 }
 
-/* .ui.card>.image {
-  margin: 5%;
-} */
+.ui.card>.image {
+  /* border: 1px solid rgb(189, 189, 189); */
+}
 
 #container {
-  padding: 2%;
+  /*Starts below where navbar ends*/
+  position: absolute;
+  /* width: 100%; */
+  top: 10vh;
 }
 
 #navbar {
-  background-color: rgba(87,194,199);
-  color: rgba(240, 240, 240);
+  /* background-color: rgba(87,194,199); */
+  /* color: rgba(240, 240, 240); */
+  border-bottom: thick double rgba(87,194,199);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  width: 100%;
+  height: 10vh;
+  background-color: rgb(255,255,255);
 }
+
+#home-banner {
+  /* background-image: linear-gradient(rgb(19, 84, 122), rgb(128, 208, 199));; */
+  background-image: linear-gradient(#B7F8DB,#50A7C2);;
+  color: rgb(255,255,255);
+  width: 100%;
+  height: 50vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* #home-banner:after {
+  background: url("./images/banner.jpg");
+  color: rgb(255,255,255);
+  width: 100%;
+  height: 50vh;
+} */
 
 #nav-header {
   font-size: 3rem;
   margin: 2%;
+}
+
+#product {
+  display: flex;
+  justify-content: space-between;
 }

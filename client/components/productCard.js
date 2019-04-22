@@ -24,8 +24,11 @@ export class ProductCard extends Component {
 					className="ui image"
 					onClick={() => this.moveToProduct(id)}
 				/>
-				<h2>{name}</h2>
-				<h3>{`$${(price/100).toFixed(2)}`}</h3>
+				<h2 className="ui header">
+					{name}
+					<div className="sub header">{`$${(price/100).toFixed(2)}`}</div>
+				</h2>
+
 			</div>
 		);
 	}

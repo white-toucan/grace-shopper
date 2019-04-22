@@ -29,7 +29,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
 				</div>
 			)}
 		</nav>
-		<hr />
+		{/* <hr /> */}
 	</div>
 );
 

@@ -29,9 +29,9 @@ export class SingleProduct extends Component {
 	render() {
 		const {name, price, description, imageUrl} = this.props.selectedProduct;
 		return (
-			<div id="product">
+			<div id="product" className="ui container">
 				<div className="product-img">
-					<img src={imageUrl || defaultImageUrl} alt="" />
+					<img src={imageUrl || defaultImageUrl} alt="" className="ui medium bordered image"/>
 				</div>
 				<div className="product-info">
 					<h3 className="product-info-name">{name}</h3>

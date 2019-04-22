@@ -12,11 +12,16 @@ export class AllProducts extends Component {
 		const {allProductsList} = this.props;
 
 		return (
-			<div className="allProducts">
-				<div className="ui five cards">
-					{allProductsList && allProductsList.map(product => (
-						<ProductCard history={this.props.history} product={product} key={product.id} />
-					))}
+			<div id="home">
+				<div id="home-banner">
+					<h1>SOME PLACEHOLDER</h1>
+				</div>
+				<div className="allProducts">
+					<div className="ui five cards">
+						{allProductsList && allProductsList.map(product => (
+							<ProductCard history={this.props.history} product={product} key={product.id} />
+						))}
+					</div>
 				</div>
 			</div>
 		);
