@@ -17,11 +17,22 @@ const initialState = {
 export const getOrdersThunk = () => {
 	return async dispatch => {
 		try {
-			const { data: ids } = await axios.get('/api/me/orders');
-			const details = Promise.all(ids.map(id => {
-				return axios.get(`/api/me/orders/${id}`);
-			})).map(order => order.data);
-			dispatch(setOrderDetails(details));
+			// Get ids of past orders
+			let { data } = await axios.get('/api/me/orders');
+			if (data.length > 0) {
+				// Transform shape of returned data
+				let ids = data.map(entry => entry.id);
+				// Retrieve and dispatch order details for each id
+				Promise.all(ids.map(id => {
+					return axios.get(`/api/me/orders/${id}`);
+				})).then(orders => {
+					let orderDetails = orders.map(res => res.data);
+					dispatch(setOrderDetails(orderDetails));
+				});
+			}
+			else {
+				dispatch(setOrderDetails([]));
+			}
 		} catch (error) {
 			console.error(error);
 		}

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Accordion, Icon } from 'semantic-ui-react'
+import { Accordion } from 'semantic-ui-react'
 import OrderHistoryItem from './orderHistoryItem';
 import { getOrdersThunk } from '../store/order';
 
@@ -32,12 +32,12 @@ class OrderHistory extends Component {
 	}
 
 	render() {
-		const orders = this.props.orders || null;
+		const orders = this.props.orders;
 		return (
 			<div className="order-history">
 				<h2>Order History</h2>
 				{
-					orders ?
+					orders && orders.length > 0 ?
 					<Accordion styled>
 						{this.generateOrderHistory(orders)}
 					</Accordion>
