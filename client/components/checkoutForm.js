@@ -4,9 +4,9 @@ import {CardElement, injectStripe} from 'react-stripe-elements';
 class CheckoutForm extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      complete: false
-    }
+    // this.state = {
+    //   complete: false
+    // }
     this.submit = this.submit.bind(this);
   }
 
@@ -35,7 +35,7 @@ class CheckoutForm extends Component {
       <div className="checkout">
         <p>Would you like to complete the purchase?</p>
         <CardElement />
-        <button onClick={this.submit}>Submit Order</button>
+        <button onClick={this.submit} type="button">Submit Order</button>
       </div>
     );
   }

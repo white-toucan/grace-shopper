@@ -21,10 +21,12 @@ export const createCheckoutSession = (cartItems) => async dispatch => {
 
 const redirectToCheckout = sessionId => async dispatch => {
   try {
-    const redirect = stripe.redirectToCheckout({
+    const result = await stripe.redirectToCheckout({
       sessionId
     });
-    history.push(redirect);
+    if (result.error) {
+
+    }
   } catch (error) {
     console.error(error);
   }
