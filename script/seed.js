@@ -12,6 +12,45 @@ async function seed() {
 		User.create({email: 'murphy@email.com', password: '123'})
 	]);
 
+	const profileTemplate = (name, address, email, password, cardNumber) => ({
+		name,
+		address,
+		email,
+		password,
+		cardNumber
+	});
+
+	const creatingProfiles = [
+		profileTemplate(
+			'Leo Dicaprio',
+			'1419 Westwood Blvd Los Angeles CA 90024',
+			'finallywonaoscar@aol.com',
+			'321',
+			4482345676537790
+		),
+		profileTemplate(
+			'BradPitt',
+			'7009 Sunset Blvd, Los Angeles, CA 90028',
+			'8kids@aol.com',
+			'456',
+			44827367998766230
+		),
+		profileTemplate(
+			'Robert Dinero',
+			'8888 Casino Drive',
+			'lovein90@aol.com',
+			'145',
+			4482366538386399
+		),
+		profileTemplate(
+			'Michelle Pfeiffer',
+			'6838 Hollywood Blvd, Los Angeles, CA 90028',
+			'mich@aol.com',
+			'637',
+			4482356789765432
+		)
+	].map(data => User.create(data));
+
 	const productTemplate = (name, description, price, imageUrl) => ({
 		name,
 		description,
@@ -52,13 +91,20 @@ async function seed() {
 			897,
 			'/images/products/spot_the_dog_beanie.jpg'
 		),
-		productTemplate('Nintendo 64', 'The best graphics in the industry', 15000, '/images/products/nintendo64.jpeg'),
+		productTemplate(
+			'Nintendo 64',
+			'The best graphics in the industry',
+			15000,
+			'/images/products/nintendo64.jpeg'
+		)
 	].map(data => Product.create(data));
 
 	const products = await Promise.all(creatingProducts);
+	const profiles = await Promise.all(creatingProfiles);
 
 	console.log(`seeded ${users.length} users`);
 	console.log(`seeded ${products.length} products`);
+	console.log(`seeded ${profiles.length} profiles `);
 	console.log(`seeded successfully`);
 }
 

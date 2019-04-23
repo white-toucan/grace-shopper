@@ -3,7 +3,6 @@ const {User} = require('../db/models')
 module.exports = router
 
 router.get('/', async (req, res, next) => {
-  
   try {
     if(req.user && req.user.isAdmin) {
       const users = await User.findAll({
@@ -21,4 +20,21 @@ router.get('/', async (req, res, next) => {
     next(err)
   }
 })
+
+router.get('/:id', async (req, res, next) => {
+	try {
+		const id = +req.params.id;
+		const user = await User.findByPk(id);
+		if (!user) {
+			res.sendStatus(404);
+		} else {
+			res.json(user);
+		}
+	} catch (error) {
+		next(error);
+	}
+});
+
+
+
 
