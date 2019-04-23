@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Accordion, Icon } from 'semantic-ui-react'
 import OrderHistoryItem from './orderHistoryItem';
-// import { getOrdersThunk } from '../store/orders';
+import { getOrdersThunk } from '../store/order';
 
 class OrderHistory extends Component {
 	constructor(props) {
@@ -11,7 +11,7 @@ class OrderHistory extends Component {
 	}
 
 	componentDidMount() {
-		// this.props.getOrders();
+		this.props.getOrders();
 	}
 
 	updateActive(index) {
@@ -51,13 +51,15 @@ class OrderHistory extends Component {
 
 const mapStateToProps = state => {
 	return {
-		// orders: state.orders.allOrders
+		orders: state.order.ordersWithDetails
 	};
 };
 
 const mapDispatchToProps = dispatch => {
 	return {
-		// getOrders: dispatch(getOrdersThunk)
+		getOrders: function() {
+			dispatch(getOrdersThunk());
+		}
 	}
 };
 
