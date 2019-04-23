@@ -1,6 +1,10 @@
 import axios from 'axios';
-var stripe = Stripe(process.env.STRIPE_SECRET);
-console.log(process.env.STRIPE_SECRET)
+import history from '../history';
+import {} from '../store'
+import {STRIPE_CLIENT_KEY} from '../components/util/constants';
+
+
+var stripe = Stripe(STRIPE_CLIENT_KEY);
 
 const SET_CHECKOUT_SESSION = 'SET_CHECKOUT_SESSION';
 
@@ -9,24 +13,29 @@ const setCheckoutSession = sessionId => ({
   sessionId
 });
 
-export const createCheckoutSession = (cartItems) => async dispatch => {
-  try {
-    const {data: session} = await axios.post('/api/me/checkout/', cartItems);
-    dispatch(setCheckoutSession(session.id));
-    dispatch(redirectToCheckout());
-  } catch (error) {
-    console.error(error);
-  }
-}
-
 const redirectToCheckout = sessionId => async dispatch => {
   try {
     const result = await stripe.redirectToCheckout({
       sessionId
     });
     if (result.error) {
-
+      // const error = result.error.message;
+      console.error(result.error.message);
     }
+    else {
+      dispatch()
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export const createCheckoutSession = cartItems => async dispatch => {
+  try {
+    console.log(cartItems);
+    const {data: session} = await axios.post('/api/checkout/session', cartItems);
+    dispatch(setCheckoutSession(session.id));
+    dispatch(redirectToCheckout(session.id));
   } catch (error) {
     console.error(error);
   }

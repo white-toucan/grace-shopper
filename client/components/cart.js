@@ -1,7 +1,9 @@
 import React, {Component, Fragment} from 'react';
-import {getCartThunk, checkoutCartThunk} from '../store/index';
+import {getCartThunk, checkoutCartThunk, createCheckoutSession} from '../store/index';
+import {StripeProvider} from 'react-stripe-elements';
 import {connect} from 'react-redux';
 import CartItem from './cartItem';
+import {STRIPE_CLIENT_KEY} from './util/constants'
 
 const formatCentsToDollars = (price) => `$${(price / 100).toFixed(2)}`;
 
@@ -25,22 +27,24 @@ export class Cart extends Component {
 			<div className="cart">
 				{cart && cart.length > 0 ?
 				<Fragment>
-					<h1> CART </h1>
-					{cart.map(product =>
-						<CartItem
-							product={product}
-							history ={this.props.history}
-							key={product.id} />
-					)}
-					<div className="cart-checkout">
-						<h3 className="cart-total">Total: {totaler(cart)}</h3>
-						<button
-							type="button"
-							onClick={checkout}
-							className="btn-cart-checkout">
-							Submit Order
-						</button>
-					</div>
+						<h1> CART </h1>
+						{cart.map(product =>
+							<CartItem
+								product={product}
+								history ={this.props.history}
+								key={product.id} />
+						)}
+						<div className="cart-checkout">
+							<h3 className="cart-total">Total: {totaler(cart)}</h3>
+							<StripeProvider apiKey={STRIPE_CLIENT_KEY}>
+								<button
+									type="button"
+									onClick={() => checkout(cart)}
+									className="btn-cart-checkout">
+									Submit Order
+								</button>
+							</StripeProvider>
+						</div>
 				</Fragment>
 				:
 				<Fragment>
@@ -63,8 +67,9 @@ const mapDispatchToProps = dispatch => {
 		getCartThunk: function() {
 			dispatch(getCartThunk());
 		},
-		checkout: function() {
-			dispatch(checkoutCartThunk());
+		checkout: function(cart) {
+			dispatch(createCheckoutSession(cart))
+			// dispatch(checkoutCartThunk());
 		}
 	};
 };

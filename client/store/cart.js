@@ -58,7 +58,7 @@ export const checkoutCartThunk = () => async dispatch => {
 	try {
 		// API call to record purchasePrice for cartItems, archive current
 		// active cart, and create new cart
-		const res = await axios.put(`/api/me/cart`); // TODO: needs route functionality
+		const res = await axios.put(`/api/me/cart`);
 		dispatch(checkoutCart());
 	} catch (error) {
 		console.error(error);
