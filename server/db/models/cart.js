@@ -6,6 +6,9 @@ const Cart = db.define('cart', {
 		type: Sequelize.BOOLEAN,
 		allowNull: false,
 		defaultValue: true
+	},
+	sessionId:{
+		type: Sequelize.STRING
 	}
 });
 
