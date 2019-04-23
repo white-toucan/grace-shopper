@@ -8,7 +8,8 @@ import {
 	UserHome,
 	Cart,
 	AllProducts,
-	SingleProduct
+	SingleProduct,
+	OrderHistory
 } from './components';
 import {me} from './store';
 
