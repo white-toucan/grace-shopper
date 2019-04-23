@@ -1,5 +1,6 @@
 import React, {Component, Fragment} from 'react';
-import {getCartThunk, checkoutCartThunk, createCheckoutSession} from '../store/index';
+import {getCartThunk, checkoutCartThunk} from '../store/index';
+import {createCheckoutSession} from '../store/checkout';
 import {StripeProvider} from 'react-stripe-elements';
 import {connect} from 'react-redux';
 import CartItem from './cartItem';
