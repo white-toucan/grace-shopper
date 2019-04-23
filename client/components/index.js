@@ -10,3 +10,4 @@ export {default as ProductCard} from './productCard';
 export {default as AllProducts} from './allProducts';
 export {default as Cart} from './cart'
 export {default as SingleProduct} from './singleProduct';
+export {default as Checkout} from './checkout';

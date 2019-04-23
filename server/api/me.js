@@ -2,6 +2,7 @@ const router = require('express').Router();
 const Cart = require('../db/models/cart');
 const CartItem = require('../db/models/cartItem');
 const Product = require('../db/models/product');
+const stripe = require('stripe')(process.env.STRIPE_SECRET);
 
 module.exports = router;
 
@@ -117,4 +118,52 @@ router.get('/orders/:cartId', async (req, res, next) => {
 	} catch (error) {
 		next(error);
 	}
+});
+
+// router.post('/checkout/sessions', async(req, res, next) => {
+//   try {
+//     const lineItems = req.body.map(({price, name, description, imageUrl, quantity}) => ({
+//       amount: price,
+//       currency: 'usd',
+//       name,
+//       description,
+//       images: [imageUrl],
+//       quantity
+//     }));
+
+//     const session = await stripe.checkout.sessions.create({
+//       success_url: '/checkout/success',
+//       cancel_url: '/cart',
+//       payment_method_types: ['card'],
+//       line_items: lineItems
+//     });
+//     res.json(session);
+//   } catch (error) {
+//     next(error);
+//   }
+// });
+
+// router.get('/checkout/sessions/:id', async(req, res, next) => {
+//   try {
+//     const sessionId = req.params.id;
+//     const checkoutSession = await stripe.checkout.sessions.retrieve(sessionId);
+//     res.json(checkoutSession);
+//   } catch (error) {
+//     next(error);
+//   }
+// });
+
+router.post("/charge", async (req, res, next) => {
+  try {
+    let {status} = await stripe.charges.create({
+      amount: req.body.total,
+      currency: "usd",
+      description: "An example charge",
+      source: req.body.token
+    });
+
+    res.json({status});
+  } catch (err) {
+    next(err);
+  }
 });
