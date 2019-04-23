@@ -13,12 +13,12 @@ module.exports = router
  * by git! In this case, you may use a file called `secrets.js`, which will
  */
 
-// if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
-//   console.log('Google client ID / secret not found. Skipping Google OAuth.')
-// } else {
+if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
+  console.log('Google client ID / secret not found. Skipping Google OAuth.')
+} else {
   const googleConfig = {
-    clientID: process.env.GOOGLE_CLIENT_ID || '',
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
+    clientID: process.env.GOOGLE_CLIENT_ID ,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     callbackURL: '/auth/google/callback'
   };
 
