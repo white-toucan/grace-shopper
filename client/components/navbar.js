@@ -12,11 +12,12 @@ const Navbar = ({handleClick, isLoggedIn}) => (
 			{isLoggedIn ? (
 				<div>
 					{/* The navbar will show these links after you log in */}
+					<Link to="/home">Home</Link>
+					<Link to="/cart">Cart</Link>
+					<Link to="/orders">Order History</Link>
 					<a href="#" onClick={handleClick}>
 						Logout
 					</a>
-					<Link to="/home">Home</Link>
-					<Link to="/cart">Cart</Link>
 					<Label>
 						<Icon name="cart" /> 23
 						{/* todo: make this cart counter dynamic */}
