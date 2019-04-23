@@ -2,20 +2,7 @@ import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { Accordion, Icon, Item } from 'semantic-ui-react';
 import { defaultImageUrl } from './util/constants';
-
-const padZeros = (num, length) => {
-	let numLength = num.toString().length;
-	return Array(length - numLength).fill(0).join('').concat(num);
-};
-
-const convertTime = (timeString) => {
-	const months = ['January', 'February', 'March', 'April', 'May', 'June',
-		'July', 'August', 'September', 'October', 'November', 'December']
-	let year = timeString.slice(0, 4);
-	let month = months[+timeString.slice(5, 7)];
-	let date = timeString.slice(8, 10);
-	return `${month} ${date}, ${year}`;
-};
+import { padZeros, convertTime, centsToDollars } from './util/helperFuncs';
 
 const OrderHistoryItem = props => {
 	const { index, isActive, orderDetails, handleClick } = props;
@@ -52,7 +39,7 @@ const OrderHistoryItem = props => {
 								</Link></Item.Header>
 								<Item.Description>
 									<span className="price">
-										{product.quantity} x ${product.purchasePrice/100}
+										{product.quantity} x ${centsToDollars(product.purchasePrice)}
 									</span>
 								</Item.Description>
 							</Item.Content>
@@ -61,7 +48,7 @@ const OrderHistoryItem = props => {
 					}
 					<Item>
 						<strong className="price">
-							Order Total: ${orderTotal / 100}
+							Order Total: ${centsToDollars(orderTotal)}
 						</strong>
 					</Item>
 				</Item.Group>
