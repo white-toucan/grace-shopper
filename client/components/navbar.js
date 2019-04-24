@@ -15,6 +15,11 @@ class Navbar extends Component {
 		this.setState({activeItem: name});
 		this.props.history.push(`/${name}`);
 	};
+	handleOrdersClick = (e, {name}) => {
+		console.log(name, 'name');
+		this.setState({activeItem: name});
+		this.props.history.push('/orders');
+	};
 
 	render() {
 		const {activeItem} = this.state;
@@ -32,16 +37,18 @@ class Navbar extends Component {
 									onClick={this.handleSelectClick}
 								/>
 								<Menu.Menu position="right">
-									<Menu.Item>
-										<a
-											href="#"
-											onClick={() => {
-												this.props.handleLoginClick();
-											}}
-										>
-											Logout
-										</a>
-									</Menu.Item>
+									<Menu.Item
+										name="Order History"
+										active={activeItem === 'Order History'}
+										onClick={this.handleOrdersClick}
+									/>
+									<Menu.Item
+										name="Logout"
+										active={activeItem === 'Logout'}
+										onClick={() => {
+											this.props.handleLoginClick();
+										}}
+									/>
 									<Menu.Item
 										name="Cart"
 										active={activeItem === 'Cart'}
