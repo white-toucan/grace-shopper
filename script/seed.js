@@ -118,39 +118,21 @@ async function seed() {
 		),
 		productTemplate(
 			'Stone Temple Pilots - Purple',
-			'Classic STP',
-			1599,
+			'Breathing is the hardest thing to do.. so take a breath and hit add to cart',
+			1899,
 			'/images/products/STP_purple.jpg'
 		),
 		productTemplate(
-			'The Offspring - Smash.jpg',
-			'Optimism, Effervesence, White, Green, Magenta, Puce... All nowwhere to be found on this album',
-			1599,
-			'/images/products/The Offspring - Smash.jpg'
+			'The Offspring - Smash',
+			'No self respecting person would miss out on this deal. Buy now',
+			999,
+			'/images/products/The_Offspring_Smash.jpg'
 		),
 		productTemplate(
-			'Weezer.jpg',
-			'Optimism, Effervesence, White, Green, Magenta, Puce... All nowwhere to be found on this album',
+			'Weezer - Weezer',
+			"Say it ain't so...buy this album already",
 			1599,
 			'/images/products/Weezer.jpg'
-		),
-		productTemplate(
-			'SmashingPumpkins - Mellon Collie and the Infinite Sadness',
-			'Optimism, Effervesence, White, Green, Magenta, Puce... All nowwhere to be found on this album',
-			1599,
-			'/images/products/SmashingPumpkins_Mellon_Collie.jpg'
-		),
-		productTemplate(
-			'SmashingPumpkins - Mellon Collie and the Infinite Sadness',
-			'Optimism, Effervesence, White, Green, Magenta, Puce... All nowwhere to be found on this album',
-			1599,
-			'/images/products/SmashingPumpkins_Mellon_Collie.jpg'
-		),
-		productTemplate(
-			'SmashingPumpkins - Mellon Collie and the Infinite Sadness',
-			'Optimism, Effervesence, White, Green, Magenta, Puce... All nowwhere to be found on this album',
-			1599,
-			'/images/products/SmashingPumpkins_Mellon_Collie.jpg'
 		)
 	].map(data => Product.create(data));
 

@@ -32,16 +32,19 @@ class Navbar extends Component {
 									onClick={this.handleSelectClick}
 								/>
 								<Menu.Menu position="right">
-									<Menu.Item>
-										<a
-											href="#"
-											onClick={() => {
-												this.props.handleLoginClick();
-											}}
-										>
-											Logout
-										</a>
-									</Menu.Item>
+									<Menu.Item
+										name="Order History"
+										// todo: update name with correct frontend route for orders?
+										active={activeItem === 'Order History'}
+										onClick={this.handleSelectClick}
+									/>
+									<Menu.Item
+										name="Logout"
+										active={activeItem === 'Logout'}
+										onClick={() => {
+											this.props.handleLoginClick();
+										}}
+									/>
 									<Menu.Item
 										name="Cart"
 										active={activeItem === 'Cart'}
