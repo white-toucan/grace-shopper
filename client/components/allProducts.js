@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {getAllProductsThunk} from '../store';
 import {connect} from 'react-redux';
 import ProductCard from './productCard';
+import { Container } from 'semantic-ui-react';
 
 export class AllProducts extends Component {
 	componentDidMount() {
@@ -12,12 +13,14 @@ export class AllProducts extends Component {
 		const {allProductsList} = this.props;
 
 		return (
-			<div className="allProducts">
-				<h1>All Products Container</h1>
+			<section className="allProducts">
+				<h1 className="text-center">All Discs</h1>
+				<Container className="doubling stackable three column grid">
 				{allProductsList && allProductsList.map(product => (
 					<ProductCard history={this.props.history} product={product} key={product.id} />
 				))}
-			</div>
+				</Container>
+			</section>
 		);
 	}
 }
