@@ -75,3 +75,18 @@ a:hover {
 	text-align: center;
 }
 
+.flex-end {
+	display: flex;
+	justify-content: flex-end;
+}
+
+.product-info {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	margin-left: 5rem;
+}
+
+#product {
+	display: flex;
+}
