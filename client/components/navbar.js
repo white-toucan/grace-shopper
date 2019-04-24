@@ -1,58 +1,110 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Link} from 'react-router-dom';
 import {logout, checkoutCart} from '../store';
-import {Icon, Label} from 'semantic-ui-react';
+import {Icon, Menu} from 'semantic-ui-react';
 
-const Navbar = ({handleClick, isLoggedIn}) => (
-	<div>
-		<h1>BRAVE CART</h1>
-		<nav>
-			{isLoggedIn ? (
-				<div>
-					{/* The navbar will show these links after you log in */}
-					<Link to="/home">Home</Link>
-					<Link to="/cart">Cart</Link>
-					<Link to="/orders">Order History</Link>
-					<a href="#" onClick={handleClick}>
-						Logout
-					</a>
-					<Label>
-						<Icon name="cart" /> 23
-						{/* todo: make this cart counter dynamic */}
-					</Label>
-				</div>
-			) : (
-				<div>
-					{/* The navbar will show these links before you log in */}
-					<Link to="/home">Home</Link>
-					<Link to="/login">Login</Link>
-					<Link to="/signup">Sign Up</Link>
-					<Link to="/cart">Cart</Link>
-					<Label>
-						<Icon name="cart" /> 23
-						{/* todo: make this cart counter dynamic */}
-					</Label>
-				</div>
-			)}
-		</nav>
-		<hr />
-	</div>
-);
+class Navbar extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			activeItem: {}
+		};
+	}
+
+	handleSelectClick = (e, {name}) => {
+		this.setState({activeItem: name});
+		this.props.history.push(`/${name}`);
+	};
+
+	render() {
+		const {activeItem} = this.state;
+		return (
+			<div>
+				<h1>Grunge Cart</h1>
+				<nav>
+					{this.props.isLoggedIn ? (
+						<div>
+							{/* The navbar will show these links after you log in */}
+							<Menu>
+								<Menu.Item
+									name="Products"
+									active={activeItem === 'Products'}
+									onClick={this.handleSelectClick}
+								/>
+								<Menu.Menu position="right">
+									<Menu.Item>
+										<a
+											href="#"
+											onClick={() => {
+												this.props.handleLoginClick();
+											}}
+										>
+											Logout
+										</a>
+									</Menu.Item>
+									<Menu.Item
+										name="Cart"
+										active={activeItem === 'Cart'}
+										onClick={this.handleSelectClick}
+									>
+										<Icon name="cart" /> {this.props.cartItemsQuantity}
+									</Menu.Item>
+								</Menu.Menu>
+							</Menu>
+						</div>
+					) : (
+						<div>
+							{/* The navbar will show these links before you log in */}
+							<Menu>
+								<Menu.Item
+									name="Products"
+									active={activeItem === 'Products'}
+									onClick={this.handleSelectClick}
+								/>
+								<Menu.Menu position="right">
+									<Menu.Item
+										name="login"
+										active={activeItem === 'login'}
+										onClick={this.handleSelectClick}
+									/>
+									<Menu.Item
+										name="signup"
+										active={activeItem === 'signup'}
+										onClick={this.handleSelectClick}
+									/>
+									<Menu.Item
+										name="Cart"
+										active={activeItem === 'Cart'}
+										onClick={this.handleSelectClick}
+									>
+										<Icon name="cart" /> {this.props.cartItemsQuantity}
+									</Menu.Item>
+								</Menu.Menu>
+							</Menu>
+						</div>
+					)}
+				</nav>
+			</div>
+		);
+	}
+}
 
 /**
  * CONTAINER
  */
 const mapState = state => {
 	return {
-		isLoggedIn: !!state.user.id
+		isLoggedIn: !!state.user.id,
+		cartItemsQuantity: state.cart.cartItems.reduce((agg, cartItem) => {
+			agg = cartItem.quantity + agg;
+			return agg;
+		}, 0)
 	};
 };
 
 const mapDispatch = dispatch => {
 	return {
-		handleClick() {
+		handleLoginClick() {
 			dispatch(logout());
 			dispatch(checkoutCart());
 		}
@@ -60,11 +112,3 @@ const mapDispatch = dispatch => {
 };
 
 export default connect(mapState, mapDispatch)(Navbar);
-
-/**
- * PROP TYPES
- */
-Navbar.propTypes = {
-	handleClick: PropTypes.func.isRequired,
-	isLoggedIn: PropTypes.bool.isRequired
-};
