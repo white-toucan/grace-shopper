@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {logout, checkoutCart} from '../store';
-
+import {Link} from 'react-router-dom'
 import {Icon, Menu} from 'semantic-ui-react';
 
 class Navbar extends Component {
@@ -33,6 +33,14 @@ class Navbar extends Component {
 									onClick={this.handleSelectClick}
 								/>
 								<Menu.Menu position="right">
+								<Menu.Item>
+										<Link
+											to='/profile'
+											
+										>
+											Profile
+										</Link>
+									</Menu.Item>
 									<Menu.Item>
 										<a
 											href="#"
