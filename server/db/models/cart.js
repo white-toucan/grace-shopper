@@ -9,6 +9,9 @@ const Cart = db.define('cart', {
 	},
 	sessionId:{
 		type: Sequelize.STRING
+	},
+	checkoutSessionId: {
+		type: Sequelize.STRING
 	}
 });
 
