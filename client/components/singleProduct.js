@@ -41,7 +41,9 @@ export class SingleProduct extends Component {
 		const {name, price, description, imageUrl} = this.props.selectedProduct;
 		return (
 			<Container id="product">
-				<Image src={imageUrl || defaultImageUrl} size='large' />
+				<span className="cd-case">
+					<Image src={imageUrl || defaultImageUrl} size='large' />
+				</span>
 				<div className="product-info">
 					<div>
 						<h1 className="product-info-name">{name}</h1>
