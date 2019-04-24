@@ -11,3 +11,4 @@ export {default as AllProducts} from './allProducts';
 export {default as Cart} from './cart'
 export {default as SingleProduct} from './singleProduct';
 export {default as OrderHistory} from './orderHistory';
+export {default as OrderConfirmation} from './orderConfirmation';

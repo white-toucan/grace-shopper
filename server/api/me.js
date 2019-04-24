@@ -24,6 +24,7 @@ router.get('/cart', async (req, res, next) => {
 });
 
 // Checkout cart
+/* NOTE THIS LOGIC HAS BEEN MOVED TO `POST /api/checkout/webhook` and this route is no longer in use */
 router.put('/cart', async (req, res, next) => {
 	try {
 		let paymentConfirmed = true;
