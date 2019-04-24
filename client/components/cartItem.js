@@ -5,6 +5,8 @@ import {
 	deleteFromCartThunk
 } from '../store/index';
 import {connect} from 'react-redux';
+import {defaultImageUrl} from './util/constants';
+import {Item, Button, Icon} from 'semantic-ui-react';
 
 export class CartItem extends Component {
 	constructor(props) {
@@ -40,36 +42,52 @@ export class CartItem extends Component {
 		let {product} = this.props;
 
 		return (
-			<div className="cartItem">
-				<img
-					src={product.imageUrl}
-					height="200"
-					width="200"
-					onClick={() => this.onClickMoveToProduct(product)}
-				/>
-				<h2>{product.name}</h2>
-				<h3>{`$${(product.price / 100).toFixed(2)}`}</h3>
-				<form onSubmit={() => this.onSubmitQtyChangeThunk(product)}>
-					<div className="change-qty">
-						<label htmlFor="quantity">Qty</label>
-						<select name="quantity" value={this.state.quantity} onChange={(event) => this.onChangeQty(event)} >
-							{
-								/* Will eventually replace 20 with product inventory */
-								new Array(Math.min(10, 20)).fill(1).map((_, i) =>
-									<option key={i} value={i + 1}>{i + 1}</option>
-								)
-							}
-						</select>
-					</div>
-					<button type="submit">Update</button>
-				</form>
-				<button
-					onClick={() => this.onClickDeleteFromCartThunk(product)}
-					type="button"
-				>
-					Remove
-				</button>
-			</div>
+			<Item className="cartItem">
+				<div className="cd-case small">
+					<img
+						src={product.imageUrl || defaultImageUrl}
+						className="ui image"
+						onClick={() => this.onClickMoveToProduct(product)} />
+				</div>
+
+				<Item.Content>
+					<Item.Header>{product.name}</Item.Header>
+					<Item.Meta>
+						<span className='price'>{`$${(product.price / 100).toFixed(2)}`}</span>
+					</Item.Meta>
+					<Item.Description>
+
+						<form onSubmit={() => this.onSubmitQtyChangeThunk(product)}>
+							<span className="change-qty">
+								<label htmlFor="quantity" style={{display: 'inline'}}>Qty</label>
+								<select
+									name="quantity"
+									value={this.state.quantity}
+									onChange={(event) => this.onChangeQty(event)}>
+									{
+										new Array(Math.min(10, 20)).fill(1).map((_, i) =>
+											<option key={i} value={i + 1}>{i + 1}</option>
+										)
+									}
+								</select>
+							</span>
+							<Button type="submit" size="tiny">
+								<Icon name='exchange' />Update
+							</Button>
+						</form>
+						<span>
+							<Button icon
+								size="tiny"
+								color="red"
+								onClick={() => this.onClickDeleteFromCartThunk(product)}
+								type="button">
+								<Icon name='cancel' />
+								Remove
+							</Button>
+						</span>
+					</Item.Description>
+				</Item.Content>
+			</Item>
 		);
 	}
 }

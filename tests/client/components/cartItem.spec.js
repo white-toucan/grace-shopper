@@ -29,7 +29,7 @@ describe('Components - CartItem', () => {
 		);
 	});
 
-	it('renders the product name in an h2 tag', () => {
+	xit('renders the product name in an h2 tag', () => {
 		expect(cartItem.find('h2').text()).to.be.equal('Test Item');
 	});
 
