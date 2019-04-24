@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import {Container, Image, Select, Form, Button} from 'semantic-ui-react';
 import {getProductByIdThunk, addingToCartThunk} from '../store';
 import {defaultImageUrl} from './util/constants';
 
@@ -9,6 +10,7 @@ export class SingleProduct extends Component {
 		this.state = {
 			quantity: 1
 		};
+		this.onChangeQty = this.onChangeQty.bind(this);
 	}
 
 	componentDidMount() {
@@ -21,42 +23,54 @@ export class SingleProduct extends Component {
 	}
 
 	onChangeQty(event) {
+		const selectedValue = +event.target.children[0].textContent;
 		this.setState({
-			quantity: +event.target.value
+			quantity: selectedValue
 		});
+	}
+
+	generateSelectOptions() {
+		return new Array(Math.min(10, 20)).fill(1).map((_, i) => ({
+			key: i,
+			text: i + 1,
+			value: i + 1
+		}));
 	}
 
 	render() {
 		const {name, price, description, imageUrl} = this.props.selectedProduct;
 		return (
-			<div id="product">
-				<div className="product-img">
-					<img src={imageUrl || defaultImageUrl} alt="" />
-				</div>
+			<Container id="product">
+				<span className="cd-case">
+					<Image src={imageUrl || defaultImageUrl} size='large' />
+				</span>
 				<div className="product-info">
-					<h3 className="product-info-name">{name}</h3>
-					<p className="product-price">{`$${(price/100).toFixed(2)}`}</p>
-					<p className="product-desc">{description}</p>
-					<div className="change-qty">
-						<label htmlFor="quantity">Qty</label>
-						<select name="quantity" value={this.state.quantity} onChange={(event) => this.onChangeQty(event)} >
-							{
-								/* Will eventually replace 20 with product inventory */
-								new Array(Math.min(10, 20)).fill(1).map((_, i) =>
-									<option key={i} value={i + 1}>{i + 1}</option>
-								)
-							}
-						</select>
+					<div>
+						<h1 className="product-info-name">{name}</h1>
+						<h2 className="product-price">{`$${(price/100).toFixed(2)}`}</h2>
+						<p className="product-desc">{description}</p>
 					</div>
-					<button
-						className="add-to-cart"
-						type="button"
-						onClick={() => this.addingToCartThunk(this.props.selectedProduct)}
-					>
-						Add to Cart
-					</button>
+					<div className="change-qty">
+						<Form className="flex-end">
+							<Form.Group inline>
+								<Form.Field
+									label='QTY'
+									control={Select}
+									options={this.generateSelectOptions()}
+									value={this.state.quantity}
+									onChange={this.onChangeQty}
+								/>
+								<Form.Field
+									control={Button}
+									content='Add to Cart'
+									primary
+									onClick={() => this.addingToCartThunk(this.props.selectedProduct)}
+								/>
+							</Form.Group>
+						</Form>
+					</div>
 				</div>
-			</div>
+			</Container>
 		);
 	}
 }
