@@ -1,21 +1,77 @@
+/***************************
+ * Colors
+ ***************************/
+:root {
+	--cyan: #01a0bb;
+	--rich-blue: #006ab5;
+	--alice-orange: #ff7d00;
+	--nineties-cyan: #49aabb;
+	--nineties-purple: #9c4287;
+	--grunge-red: #8e0005;
+}
+
 body {
   font-family: sans-serif;
+  background: url('./images/patternB.png');
 }
 
 a {
-  text-decoration: none;
+	text-decoration: none;
 }
 
 label {
   display: block;
 }
 
-nav a {
-  display: inline-block;
-  margin: 1em;
+form div {
+	margin: 1em;
+	display: inline-block;
 }
 
-form div {
-  margin: 1em;
-  display: inline-block;
+h1, h2, h3, h4, nav a {
+	font-family: 'Special Elite', cursive;
 }
+
+.ui.items>.item>.content>.header,
+.ui.accordion div.title div,
+.ui.header,
+.ui.card>.content>.header,
+.price,
+.item {
+	font-family: 'Special Elite', cursive;
+}
+
+h1 {
+	font-size: 360%;
+	letter-spacing: 1.5;
+}
+
+a {
+	color: var(--grunge-red);
+}
+
+a:hover {
+	color: var(--alice-orange);
+}
+
+.ui.card:hover {
+	box-shadow: 1px 1px 8px #aaa;
+}
+
+.cd-case {
+	background: #333;
+	padding: 2px 2px 2px 25px;
+}
+
+.ui.styled.accordion .content {
+	padding-top: 20px;
+}
+
+.active.content {
+	box-shadow: inset 0 4px 4px -3px #444, inset 0 -4px 4px -3px #444;
+}
+
+.text-center {
+	text-align: center;
+}
+

@@ -16,7 +16,7 @@ install:
 before_script:
   - psql -c 'create database "grace-shopper-test";' -U postgres # remember to change this name if you change it elsewhere (e.g. package.json)
 script:
-  - npm test             # test the code
+  - npm test # test the code
   - npm run build-client # make the bundle
 
 before_deploy:
@@ -24,6 +24,6 @@ before_deploy:
 deploy:
   skip_cleanup: true # prevents travis from deleting the build
   provider: heroku
-  app: brave-cart # see README
+  app: grunge-cart # see README
   api_key:
     secure: B7tO2R8JOchmOXKy01OFwqFOhRt9wnFqVZJi9y/hnayiQFq5OmM0MToFaByI/rdDGkmJF5ehlJFu/bIv6Ns+AiHLsSRpPEIe8ZJO+QLxl/W1V1zOM6HsE80lI/j3GKn5QQj7ujuN2cDQsckH7btTI7m+nnRERBhmpJZU+5WGxV484kfu6JCM/lrgoMtvWl98Q6cUX2Hmh7LY+lMT2BPoi8jxbhWkmNalTj9BiV1cDfxJV0fCry5qfuZTvVnrhnQGBDUIDvN9F62yV8APCVOCNdMe1BjQywTAkF39hFmco8HYHtyqbwT4EnU+3VdfEcIufHpqGXn9VFb8OK4XdRpld3/3tOtltD12/1LHW/L5hJWdSMp/k+nhlDKlZz+j4IPcgHScKjEDjHIZP0eNXzLZT+UMnZVDLmgCV9YbevoIRHipwccelHZ7fBes5tMgHlTPGB8gokX1A0vtAJES+ezK09mZQR0g5Vz2RRQVq1nud/E8CRcfaiyGdIJ5u3Y4IwKX9Uy1jqHreNe+oy5pxV9DfvhbA1cUUertgJtAMqL4YneXBRzXFiofxSrbw963atfUBmIl+cUPQGJn5msfbIA7K30vxx9NDVAAcD8PEupcF58BF9jifs/7hhm41qhWVH+SEWhltc6cNMGMS2hmmXhOzv2oHPjnR0QNo/CgVGBx85I= # see README

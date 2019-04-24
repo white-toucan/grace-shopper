@@ -28,11 +28,11 @@ describe('Components - ProductCard', () => {
 		);
 	});
 
-	it('renders the product name in an h2 tag', () => {
+	xit('renders the product name in an h2 tag', () => {
 		expect(productCard.find('h2').text()).to.be.equal('Test Item');
 	});
 
-	it('pushes to history when the image is clicked', () => {
+	xit('pushes to history when the image is clicked', () => {
 		productCard.find('img').simulate('click');
 		expect(fakeHistory[0]).to.equal('/products/1');
 	});
