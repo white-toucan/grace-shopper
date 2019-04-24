@@ -1,23 +1,48 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import axios from 'axios';
+import {updatingUser} from '../store/user';
 
 class Profile extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {isEditing: false};
+		this.state = {isEditing: false, name: this.props.user.name, address: this.props.user.address};
 	}
 
 	toggleEdit = () => {
 		this.setState({isEditing: !this.state.isEditing});
 	};
 
+	onChange = e => {
+		this.setState({
+			[e.target.name]: e.target.value
+		});
+	};
+
+	updateInfo = e => {
+		e.preventDefault();
+		this.props.updatingUser({
+			name: this.state.name,
+			address: this.state.address
+		});
+	};
 	render() {
 		return (
 			<div>
 				{this.state.isEditing ? (
-					<form>
-						<input onChange='value' type="text" name="name" value={this.props.user.name} />
-						<input type="text" name="address" value={this.props.user.address} />
+					<form onSubmit={this.updateInfo}>
+						<input
+							onChange={this.onChange}
+							type="text"
+							name="name"
+							defaultValue={this.props.user.name}
+						/>
+						<input
+							onChange={this.onChange}
+							type="text"
+							name="address"
+							defaultValue={this.props.user.address}
+						/>
 						<button type="submit">Update Info</button>
 					</form>
 				) : (
@@ -43,4 +68,10 @@ const mapStateToProps = state => ({
 	user: state.user
 });
 
-export default connect(mapStateToProps, null)(Profile);
+const mapDispatchToProps = dispatch => ({
+	updatingUser(userInfo) {
+		return dispatch(updatingUser(userInfo));
+	}
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);

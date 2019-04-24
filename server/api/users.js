@@ -9,7 +9,7 @@ router.get('/', async (req, res, next) => {
         // explicitly select only the id and email fields - even though
         // users' passwords are encrypted, it won't help if we just
         // send everything to anyone who asks!
-        attributes: ['id', 'email']
+        attributes: ['id', 'email, name, address ']
       })
       res.json(users)
       
@@ -36,5 +36,14 @@ router.get('/:id', async (req, res, next) => {
 });
 
 
-
+router.put('/updateInfo', async (req,res,next) => {
+  try {
+    console.log(req.user)
+    const user = await User.findByPk(req.user.id)
+   const updatedUser = await  user.update(req.body)
+   res.json(updatedUser)
+  } catch (error) {
+    next (error)
+  }
+})
 

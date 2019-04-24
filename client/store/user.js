@@ -58,6 +58,15 @@ export const logout = () => async dispatch => {
 	}
 };
 
+export const updatingUser = userInfo => async dispatch => {
+	try {
+		const updatedUser = await axios.put('/api/users/updateInfo', userInfo);
+		dispatch(getUser(updatedUser.data));
+	} catch (err) {
+		console.log(err);
+	}
+};
+
 /**
  * REDUCER
  */
