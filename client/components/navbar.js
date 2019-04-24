@@ -15,6 +15,11 @@ class Navbar extends Component {
 		this.setState({activeItem: name});
 		this.props.history.push(`/${name}`);
 	};
+	handleOrdersClick = (e, {name}) => {
+		console.log(name, 'name');
+		this.setState({activeItem: name});
+		this.props.history.push('/orders');
+	};
 
 	render() {
 		const {activeItem} = this.state;
@@ -34,9 +39,8 @@ class Navbar extends Component {
 								<Menu.Menu position="right">
 									<Menu.Item
 										name="Order History"
-										// todo: update name with correct frontend route for orders?
 										active={activeItem === 'Order History'}
-										onClick={this.handleSelectClick}
+										onClick={this.handleOrdersClick}
 									/>
 									<Menu.Item
 										name="Logout"
