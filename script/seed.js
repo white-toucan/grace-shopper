@@ -20,39 +20,120 @@ async function seed() {
 	});
 
 	const creatingProducts = [
-		productTemplate('Garfield', 'The friendly cat', 999),
-		productTemplate('Golden Girls', 'Season 1', 1399),
 		productTemplate(
-			'Motorola Beeper',
-			'Get all your messages on the go',
-			2199,
-			'/images/products/motorola_beeper.jpg'
+			'Beck - MellowGold',
+			"Soy, Soy un perdedor..... When whining in one langauge just isn't enough",
+			1899,
+			'/images/products/Beck_MellowGold.jpg'
 		),
 		productTemplate(
-			'Sony Walkman',
-			'Take your music everywhere. Requires two AA batteries. Batteries not included.',
-			2499,
-			'/images/products/sony_walkman.jpg'
+			'Bush - Sixteen Stone',
+			"Don't let the daaaays go by....Buy this album today!",
+			1499,
+			'/images/products/Bush_Sixteen Stone.jpg'
 		),
 		productTemplate(
-			'Golden Parachute Pants',
-			'Comfort and style',
-			888,
-			'/images/products/golden_hammer_pants.jpg'
+			'Foo Fighters - Foo Fighters',
+			'They thought long and hard about their album name',
+			1999,
+			'/images/products/FooFighters.jpg'
 		),
 		productTemplate(
-			'Apple Newton',
-			'Stay on top of your daily tasks with a pocket planner.',
-			10000,
-			'/images/products/apple_newton.jpg'
+			'Green Day - American Idiot',
+			"Precient ideas... way before Donald's time",
+			999,
+			'/images/products/Green Day_American_Idiot.jpg'
 		),
 		productTemplate(
-			'Spot the Dog Beanie Baby',
-			'Pet without the mess',
-			897,
-			'/images/products/spot_the_dog_beanie.jpg'
+			'Green Day - Dookie',
+			"If youv'e got the time to listen to me whine... add to cart",
+			1199,
+			'/images/products/Green Day_Dookie.jpg'
 		),
-		productTemplate('Nintendo 64', 'The best graphics in the industry', 15000, '/images/products/nintendo64.jpeg'),
+		productTemplate(
+			'Johnny Cash - I walk the Line',
+			'Optimism, Effervesence, White, Green, Magenta... All nowwhere to be found on this album',
+			1599,
+			'/images/products/Johnny Cash_I_walk_the_Line.jpg'
+		),
+		productTemplate(
+			'Nirvana - In Utero',
+			'Buy this album...No Apologies',
+			1499,
+			'/images/products/Nirvana_In_Utero.jpg'
+		),
+		productTemplate(
+			'Nirvana - Nevermind',
+			'Buy today or tomorrow, well, whatever, nevermind',
+			1599,
+			'/images/products/Nirvana_nevermind.jpg'
+		),
+		productTemplate(
+			'Pearl_Jam - Ten',
+			"La da di indi itsat surrrrr... Eddie's spoken",
+			1599,
+			'/images/products/Pearl_Jam _Ten.jpg'
+		),
+		productTemplate(
+			'Pixies - doolittle',
+			'One of three essential Hipster Food Groups',
+			1999,
+			'/images/products/pixies_doolittle.jpg'
+		),
+		productTemplate(
+			'Radiohead - PabloHoney',
+			"Don't be a creep. Buy Now",
+			1599,
+			'/images/products/Radiohead_PabloHoney.jpg'
+		),
+		productTemplate(
+			'Smashing Pumpkins - Siamesse Dream',
+			'Today is the greatest...day to buy this album',
+			1599,
+			'/images/products/Smashing Pumpkins_Siamesse_Dream.jpg'
+		),
+		productTemplate(
+			'SmashingPumpkins - Mellon Collie and the Infinite Sadness',
+			'Tonight. Believe in me. Buy this album',
+			1599,
+			'/images/products/SmashingPumpkins_Mellon_Collie.jpg'
+		),
+		productTemplate(
+			'Soundgarden - Black_Hole_Sun',
+			"why don't you come...down off your high horse and buy this album!",
+			1699,
+			'/images/products/Sound_Garden_Black_Hole_Sun.jpg'
+		),
+		productTemplate(
+			'Soundgarden - Loud Love',
+			'A veritable forest of musical fruits and vegetables',
+			1499,
+			'/images/products/soundgarden_loud_love.jpg'
+		),
+		productTemplate(
+			'Stone Temple Pilots - Core',
+			'Classic STP',
+			1599,
+			'/images/products/Stone_Temple_Pilots_Core.jpg'
+		),
+		productTemplate(
+			'Stone Temple Pilots - Purple',
+			'Breathing is the hardest thing to do.. so take a breath and hit add to cart',
+			1899,
+			'/images/products/STP_purple.jpg'
+		),
+		productTemplate(
+			'The Offspring - Smash',
+			'No self respecting person would miss out on this deal. Buy now',
+			999,
+			'/images/products/The_Offspring_Smash.jpg'
+		),
+		productTemplate(
+			'Weezer - Weezer',
+			"Say it ain't so...buy this album already",
+			1599,
+			'/images/products/Weezer.jpg'
+		)
 	].map(data => Product.create(data));
 
 	const products = await Promise.all(creatingProducts);
