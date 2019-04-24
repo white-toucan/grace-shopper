@@ -1,15 +1,14 @@
 import React from 'react';
-import {padZeros} from './util/helperFuncs';
+import {Link} from 'react-router-dom';
+import {Container, Header} from 'semantic-ui-react';
 
-
-const OrderConfirmation = ({order}) => (
-  <div>
-    {/* <h1>Your order {`#${padZeros(order.id)}`} has been successfully processed!</h1> */}
-    <h1>Your order has been successfully processed!</h1>
-    <div>
-
-    </div>
-  </div>
+const OrderConfirmation = () => (
+  <Container text>
+    <Header as='h2'>Your Order Has Been Successfully Processed!</Header>
+    <p>
+      You can continue shopping <Link to="/home">here</Link>.
+    </p>
+  </Container>
 );
 
 export default OrderConfirmation;
