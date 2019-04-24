@@ -58,6 +58,10 @@ a:hover {
 	box-shadow: 1px 1px 8px #aaa;
 }
 
+.ui.selection.dropdown {
+	padding: 0;
+}
+
 .cd-case {
 	background: #333;
 	padding: 2px 2px 2px 25px;
@@ -85,6 +89,11 @@ a:hover {
 	flex-direction: column;
 	justify-content: space-between;
 	margin-left: 5rem;
+}
+
+#auth-form {
+	width: 60%;
+	justify-content: center;
 }
 
 #product {

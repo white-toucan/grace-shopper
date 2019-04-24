@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {auth} from '../store'
+import {Form, Button} from 'semantic-ui-react'
 
 /**
  * COMPONENT
@@ -10,27 +11,46 @@ const AuthForm = props => {
   const {name, displayName, handleSubmit, error} = props
 
   return (
-    <div>
-      <form onSubmit={handleSubmit} name={name}>
-        <div>
-          <label htmlFor="email">
-            <small>Email</small>
-          </label>
-          <input name="email" type="text" />
-        </div>
-        <div>
-          <label htmlFor="password">
-            <small>Password</small>
-          </label>
-          <input name="password" type="password" />
-        </div>
-        <div>
-          <button type="submit">{displayName}</button>
-        </div>
+    <div id="auth-form">
+      <Form onSubmit={handleSubmit} name={name}>
+        <Form.Field>
+          <label htmlFor="email">Email</label>
+          <input name="email" placeholder='Email' />
+        </Form.Field>
+        <Form.Field>
+          <label htmlFor="passowrd">Password</label>
+          <input name="password" type="password" placeholder='Password' />
+        </Form.Field>
+        <Form.Group>
+          <Button type="submit">{displayName}</Button>
+        </Form.Group>
         {error && error.response && <div> {error.response.data} </div>}
-      </form>
+      </Form>
+      <Button type="button" href="/auth/google">{displayName} with Google</Button>
       <a href="/auth/google">{displayName} with Google</a>
     </div>
+
+    // <div>
+    //   <form onSubmit={handleSubmit} name={name}>
+    //     <div>
+    //       <label htmlFor="email">
+    //         <small>Email</small>
+    //       </label>
+    //       <input name="email" type="text" />
+    //     </div>
+    //     <div>
+    //       <label htmlFor="password">
+    //         <small>Password</small>
+    //       </label>
+    //       <input name="password" type="password" />
+    //     </div>
+    //     <div>
+    //       <button type="submit">{displayName}</button>
+    //     </div>
+    //     {error && error.response && <div> {error.response.data} </div>}
+    //   </form>
+    //   <a href="/auth/google">{displayName} with Google</a>
+    // </div>
   )
 }
 
