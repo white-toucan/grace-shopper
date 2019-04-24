@@ -19,7 +19,7 @@ class Navbar extends Component {
 	render() {
 		const {activeItem} = this.state;
 		return (
-			<div>
+			<header>
 				<h1>Grunge Cart</h1>
 				<nav>
 					{this.props.isLoggedIn ? (
@@ -84,7 +84,7 @@ class Navbar extends Component {
 						</div>
 					)}
 				</nav>
-			</div>
+			</header>
 		);
 	}
 }

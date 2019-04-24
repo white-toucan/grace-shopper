@@ -41,9 +41,22 @@ h1, h2, h3, h4, nav a {
 	font-family: 'Special Elite', cursive;
 }
 
+header {
+	background: #333;
+	background: url('./images/cobain-live.jpg');
+	margin-bottom: 20px;
+}
+
 h1 {
 	font-size: 360%;
 	letter-spacing: 1.5;
+	text-align: center;
+}
+
+header h1 {
+	font-size: 480%;
+	color: var(--alice-orange);
+	text-shadow: 3px 3px 0 #111;
 }
 
 a {
